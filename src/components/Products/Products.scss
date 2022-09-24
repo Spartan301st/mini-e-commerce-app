@@ -1,0 +1,27 @@
+.category-products-container {
+    width: 100%;
+    margin-top: 5rem;
+    padding: 1rem 2rem;
+    h1 {
+        text-transform: capitalize;
+        font-size: 2.625rem;
+        font-weight: 400;
+        margin: 3rem 0;
+    }
+    .all-products-container {
+        width: 100%;
+        overflow-x: hidden;
+        min-height: 100vh;
+        
+        position: relative;
+        
+        display: grid;
+        grid-template-columns: 30% 30% 30%;
+        // grid-template-columns: auto auto auto;
+        gap: 50px 50px;
+        justify-content: space-between;
+        // display: flex;
+    
+        
+    }
+}

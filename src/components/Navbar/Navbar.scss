@@ -1,0 +1,21 @@
+.navbar {
+  height: 4rem;
+  background-color: #fff;
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem 2rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .bag-icon {
+    color: #5ECE7B;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 50%
+  }
+  
+}

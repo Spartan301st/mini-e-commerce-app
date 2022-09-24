@@ -1,0 +1,21 @@
+.thubnail-img-container {
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    .thubnail-img {
+        // width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition-duration: 0.5s;
+        transition-timing-function: ease-out;
+        
+    }
+    .thubnail-img:hover {
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+}

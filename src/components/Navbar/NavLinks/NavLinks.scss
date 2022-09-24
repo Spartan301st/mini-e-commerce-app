@@ -1,0 +1,16 @@
+.navlinks-container {
+    // width: 5rem;
+    display: flex;
+    justify-content: space-evenly;
+    .navlink {
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: #1D1F22;
+      padding: 1.3rem;
+    }
+    .active-link {
+      color: #5ECE7B;
+      border-bottom: 2px solid #5ECE7B
+    }
+  }

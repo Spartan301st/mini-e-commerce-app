@@ -1,0 +1,47 @@
+.product-details-container {
+    .details-header {
+        font-family: 'Roboto Condensed', sans-serif;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+        font-size: 1.5rem
+    }
+    .attribute-container {
+        margin-bottom: 1.5rem;
+        .attribute-values {
+            display: flex;
+            .text-attribute {
+                border: 2px solid #1D1F22;
+                margin-right: 0.5rem;
+                padding: 1rem;
+                cursor: pointer;
+            }
+            .text-attribute:hover {
+                color: white;
+                background-color: #1D1F22;
+            }
+            .text-attribute:last-child, .swatch-attribute:last-child{
+                margin-right: 0;
+            }
+            .swatch-attribute {
+                height: 32px;
+                width: 32px;
+                margin-right: 0.5rem;
+            }
+        }
+    }
+    .particular-product-price-container {
+        .particular-product-price {
+            color: #1D1F22;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+    }
+    .add-to-cart-btn {
+        text-transform: uppercase;
+        padding: 1rem 5rem;
+        border: none;
+        background-color: #5ECE7B;
+        color: white;
+        cursor: pointer;
+    }
+}

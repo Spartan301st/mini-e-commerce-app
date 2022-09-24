@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import React from "react";
+import "./App.css";
+import Navbar from "./components/Navbar/Navbar";
+import Products from "./components/Products/Products";
+import ParticularProduct from "./components/ParticularProduct/ParticularProduct";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/all" element={<Products />} />
+            <Route path="/all/:id" element={<ParticularProduct />} />
+            <Route path="/clothes" element={<Products />} />
+            <Route path="/clothes/:id" element={<ParticularProduct />} />
+            <Route path="/tech" element={<Products />} />
+            <Route path="/tech/:id" element={<ParticularProduct />} />
+            <Route path="/" element={<Navigate replace to="/all" />} />
+          </Routes>
+        </Router>
+      </div>
+    );
+  }
 }
 
 export default App;
