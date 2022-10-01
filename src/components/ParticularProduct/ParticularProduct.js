@@ -4,6 +4,7 @@ import { Query } from "@apollo/client/react/components";
 import GET_SINGLE_PRODUCT from "../../queries/getSingleProduct";
 import ThubnailPics from "./ThubnailPics/ThubnailPics";
 import ProductDetails from "./ProductDetails/ProductDetails";
+import fetchCurrentPath from "../../utils/fetchCurrentPath";
 
 class ParticularProduct extends React.Component {
   constructor(props) {
@@ -13,18 +14,13 @@ class ParticularProduct extends React.Component {
     };
     this.changeMainImage = this.changeMainImage.bind(this);
   }
+
   changeMainImage(imgUrl) {
-    // this.setState((state, props) => {
-    //   return (state.mainImageURL = imgUrl);
-    // });
     return this.setState({ mainImageURL: imgUrl });
   }
-  setInitialMainImage(imgUrl) {
-    this.changeMainImage(imgUrl);
-  }
+
   render() {
-    // TODO: CHANGE MAIN IMAGE WHEN CLICKED ON ONE OF THE SELECTED IMAGES. PROBABLY NEEDS A STATE TO BE TRACKED
-    const pathName = window.location.pathname.split("/")[2];
+    const pathName = fetchCurrentPath(2);
     return (
       <div className="single-product-container">
         <Query query={GET_SINGLE_PRODUCT} variables={{ productID: pathName }}>
@@ -32,8 +28,6 @@ class ParticularProduct extends React.Component {
             if (data) {
               const { product } = data;
               if (product) {
-                // this.setInitialMainImage(product.gallery[0]);
-
                 return (
                   <>
                     <div className="product-thubnail-pictures">
@@ -59,13 +53,6 @@ class ParticularProduct extends React.Component {
                   </>
                 );
               }
-
-              // {
-              /* 
-                  <div className="product-details"></div> */
-              // }
-              // </>
-              // );
             }
           }}
         </Query>

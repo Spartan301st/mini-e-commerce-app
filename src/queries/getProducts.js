@@ -7,7 +7,6 @@ const GET_PRODUCTS = gql`
         id
         name
         gallery
-        # TODO: FETCH PRICES BASED ON THE SELECTED CURRENCY
         prices {
           currency {
             symbol

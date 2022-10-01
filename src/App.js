@@ -9,21 +9,34 @@ import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import Products from "./components/Products/Products";
 import ParticularProduct from "./components/ParticularProduct/ParticularProduct";
+import Cart from "./components/Cart/Cart";
 
 class App extends React.Component {
   render() {
+    const availableCategories = ["all", "clothes", "tech"];
     return (
       <div className="App">
         <Router>
           <Navbar />
           <Routes>
-            <Route path="/all" element={<Products />} />
-            <Route path="/all/:id" element={<ParticularProduct />} />
-            <Route path="/clothes" element={<Products />} />
-            <Route path="/clothes/:id" element={<ParticularProduct />} />
-            <Route path="/tech" element={<Products />} />
-            <Route path="/tech/:id" element={<ParticularProduct />} />
             <Route path="/" element={<Navigate replace to="/all" />} />
+            {availableCategories.map((category, i) => (
+              <Route
+                key={`category-${i}`}
+                path={`/${category}`}
+                element={<Products />}
+              />
+            ))}
+            {availableCategories.map((category, i) => (
+              <Route
+                key={`product-${i}`}
+                path={`/${category}/:id`}
+                element={<ParticularProduct />}
+              />
+            ))}
+            <Route path="/cart" element={<Cart />} />
+            {/* TODO: ADD NO PAGE FOUND */}
+            <Route path="*" element={<div>NO PAGE FOUND</div>} />
           </Routes>
         </Router>
       </div>

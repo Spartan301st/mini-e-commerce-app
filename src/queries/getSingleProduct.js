@@ -4,8 +4,7 @@ const GET_SINGLE_PRODUCT = gql`
   query GetSingleProduct($productID: String!) {
     product(id: $productID) {
       id
-      # name
-      # inStock
+      name
       gallery
       description
       attributes {
@@ -23,7 +22,7 @@ const GET_SINGLE_PRODUCT = gql`
           symbol
         }
       }
-      # brand
+      brand
     }
   }
 `;

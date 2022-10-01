@@ -2,9 +2,10 @@ import React from "react";
 import GET_CATEGORIES from "../../queries/getCategories";
 import "./Navbar.scss";
 import { RiShoppingBag2Fill } from "react-icons/ri";
-import CardLinks from "./CardLinks/CardLinks";
+import CartLinks from "./CartLinks/CartLinks";
 import NavLinks from "./NavLinks/NavLinks";
 import { Query } from "@apollo/client/react/components";
+import GET_CURRENCIES from "../../queries/getCurrencies";
 
 class Navbar extends React.Component {
   render() {
@@ -19,7 +20,14 @@ class Navbar extends React.Component {
           }}
         </Query>
         <RiShoppingBag2Fill className="bag-icon" />
-        <CardLinks />
+        <Query query={GET_CURRENCIES}>
+          {({ loading, data }) => {
+            if (data) {
+              const { currencies } = data;
+              return <CartLinks currencies={currencies} />;
+            }
+          }}
+        </Query>
       </nav>
     );
   }

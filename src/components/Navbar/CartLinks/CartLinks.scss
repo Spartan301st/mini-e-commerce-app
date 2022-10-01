@@ -1,0 +1,38 @@
+.card-links-container {
+    // width: 3rem;
+    display: flex;
+    justify-content: space-between;
+    
+    .nav-currency-dropdown-container {
+      display: flex;
+      margin-right: 5px;
+      .dropdown-arrow-container {
+        display: flex;
+        align-items: flex-end;
+        cursor: pointer;
+        margin-right: 1rem;
+        .dropdown-currency-symbol {
+          margin-right: 5px;
+        }
+      }
+    }
+    .nav-cart-icon-container {
+      width: 20px;
+      position: relative;
+      cursor: pointer;
+      .cart-item-quantity-notifier {
+        position: absolute;
+        right: 0;
+        top: 0;
+        border-radius: 50%;
+        background-color: #1D1F22;
+        color: #EEEEEE;
+        width: 12px;
+        height: 12px;
+        font-size: 8px;
+        display: flex;
+        justify-content:center;
+        align-items:center;
+      }
+    }
+  }

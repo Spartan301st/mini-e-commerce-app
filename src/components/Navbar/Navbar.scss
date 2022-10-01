@@ -2,12 +2,13 @@
   height: 4rem;
   background-color: #fff;
   z-index: 10;
-  position: fixed;
+  position: -webkit-sticky; /* Safari */
+  position: sticky !important;
   top: 0;
   left: 0;
   width: 100%;
   padding: 1rem 2rem;
-  overflow: hidden;
+  // overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;

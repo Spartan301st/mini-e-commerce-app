@@ -1,34 +1,71 @@
 .product-details-container {
+    .brand-naming-container {
+        margin-bottom: 1.5rem;
+        h2 {
+            margin-bottom: 0.3rem;
+        }
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            
+        }
+    }
     .details-header {
         font-family: 'Roboto Condensed', sans-serif;
         text-transform: uppercase;
-        margin-bottom: 0.5rem;
-        font-size: 1.5rem
+        margin-bottom: 1.5rem;
+        font-size: 1.2rem
     }
     .attribute-container {
-        margin-bottom: 1.5rem;
+        margin-bottom: 3rem;
         .attribute-values {
             display: flex;
-            .text-attribute {
-                border: 2px solid #1D1F22;
-                margin-right: 0.5rem;
-                padding: 1rem;
-                cursor: pointer;
+            .text-attribute-container{
+                margin-right: 1rem;
+                .text-attribute-input {
+                    opacity: 0;
+                    position: fixed;
+                    width: 0;
+                }
+                .text-attribute-label {
+                    cursor: pointer;
+                    border: 2px solid #1D1F22;
+                    padding: 1rem;
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
             }
-            .text-attribute:hover {
+
+            .swatch-attribute-container {
+                margin-right: 1rem;
+                .swatch-attribute-input {
+                   opacity: 0;
+                    position: fixed;
+                    width: 0;
+                }
+                .swatch-attribute-label {
+                    display: inline-block;
+                    width: 50px;
+                    height: 50px;
+                    border: 1px solid #1D1F22;cursor: pointer;
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }      
+
+            .text-attribute-input:checked + .text-attribute-label {
                 color: white;
                 background-color: #1D1F22;
             }
-            .text-attribute:last-child, .swatch-attribute:last-child{
-                margin-right: 0;
-            }
-            .swatch-attribute {
-                height: 32px;
-                width: 32px;
-                margin-right: 0.5rem;
+
+            .swatch-attribute-input:checked + .swatch-attribute-label {
+                border: 2px solid #5ECE7B;
             }
         }
     }
+
     .particular-product-price-container {
         .particular-product-price {
             color: #1D1F22;
@@ -43,5 +80,6 @@
         background-color: #5ECE7B;
         color: white;
         cursor: pointer;
+        margin: 1rem 0;
     }
 }
