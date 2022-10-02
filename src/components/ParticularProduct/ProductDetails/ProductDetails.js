@@ -105,7 +105,7 @@ class ProductDetails extends React.Component {
                           className="text-attribute-label"
                           htmlFor={`${attribute.id}-${item.value}`}
                         >
-                          {item.displayValue}
+                          {item.value}
                         </label>
                       </div>
                     );

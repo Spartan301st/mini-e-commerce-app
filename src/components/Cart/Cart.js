@@ -2,12 +2,6 @@ import React from "react";
 import "./Cart.scss";
 
 import CartItem from "./CartItem/CartItem";
-// import { connect } from "react-redux";
-
-// const mapStateToProps = (state) => {
-//   console.log(state);
-//   return {};
-// };
 
 class CartDropdown extends React.Component {
   constructor(props) {
@@ -15,85 +9,53 @@ class CartDropdown extends React.Component {
     this.allCartItems = JSON.parse(localStorage.getItem("items")) || false;
     this.selectedCurrency = JSON.parse(localStorage.getItem("currency"));
 
-    // const itemPrices = allCartItems.forEach((item) => item.prices)
-    // TODO: HERE TEST
-    // const itemPrices = allCartItems.forEach((item) => item.prices);
     this.totalAmount = 0;
-    if (this.allCartItems) {
+    if (this.allCartItems.length) {
       for (let item of this.allCartItems) {
         for (let price of item.prices) {
           if (price.currency.symbol === this.selectedCurrency.symbol) {
-            this.totalAmount += price.amount;
+            this.totalAmount += price.amount * item.quantity;
           }
         }
       }
     }
     this.totalAmount = Number(this.totalAmount.toFixed(2));
     this.taxAmount = Number((this.totalAmount * 0.21).toFixed(2));
+    this.totalNumberOfItems =
+      this.allCartItems?.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
-    if (this.allCartItems) {
-      this.totalNumberOfItems =
-        this.allCartItems?.reduce((acc, item) => acc + item.quantity, 0) || 0;
+    this.state = {
+      totalAmount: this.totalAmount,
+      taxAmount: this.taxAmount,
+      totalNumberOfItems: this.totalNumberOfItems,
+    };
+
+    this.updateCartState = this.updateCartState.bind(this);
+  }
+
+  updateCartState(allCartItems) {
+    let totalAmount = 0;
+    if (allCartItems.length) {
+      for (let item of allCartItems) {
+        for (let price of item.prices) {
+          if (price.currency.symbol === this.selectedCurrency.symbol) {
+            totalAmount += price.amount * item.quantity;
+          }
+        }
+      }
     }
-
-    // console.log(this.totalAmount);
-    // .forEach((pricesGroup) => console.log(...pricesGroup));
-    // .map((prices) => prices);
-    // itemPrices.forEach((pricesGroup, i) => console.log(pricesGroup[i], i));
-    // console.log(itemPrices);
-
-    // const currentCurrencyPrices = itemPrices.map(
-    //   (itemPriceGroup) =>
-    //     itemPriceGroup.filter((price) => price.currency === selectedCurrency)
-    // itemPrice.find(
-    //   // (price) => price.currency.symbol === selectedCurrency.symbol
-    //   (price) => {
-    //     console.log(price);
-    //     return price.currency;
-    //   }
-    // )
-    // price.currency.symbol === selectedCurrency.symbol && price.amount
-    // );
-
-    // console.log("currentCurrencyPrices", currentCurrencyPrices);
-
-    // const totalAmount = currentCurrencyPrices.reduce(
-    //   (totalAmount, price) => totalAmount + price.amount,
-    //   0
-    // );
-    // console.log("totalAmount", totalAmount);
-
-    // let totalPrice = allCartItems.reduce(
-    //   (totalPrice, cartItem) => totalPrice.push(cartItem),
-    //   []
-    // );
-    // console.log(totalPrice);
-    // console.log("this.state", this.state);
-    // console.log("allCartItems", allCartItems.allAttributes);
-    // console.log("allCartItems", allCartItems[0].allAttributes);
-    // console.log("allCartItems", allCartItems[0].selectedAttributes);
-    // allCartItems.forEach((item) => {
-    //   const { allAttributes, selectedAttributes } = item;
-    //   allAttributes.forEach((attribute) => {
-    //     console.log(attribute.id, attribute.items);
-    //     let itemValue = selectedAttributes[attribute.id];
-    //     attribute.items.forEach((item) => {
-    //       if (item.value === itemValue) {
-    //         console.log("item", item);
-    //       }
-    //     });
-    //     // if(attribute.id == selectedAttributes)
-    //   });
-    //   // console.log(allAttributes);
-    //   console.log(selectedAttributes);
-    //   console.log("===");
-    // });
+    this.setState({
+      totalAmount: Number(totalAmount.toFixed(2)),
+      taxAmount: Number((Number(totalAmount.toFixed(2)) * 0.21).toFixed(2)),
+      totalNumberOfItems:
+        allCartItems?.reduce((acc, item) => acc + item.quantity, 0) || 0,
+    });
   }
 
   render() {
     return (
       <div className="cart-container">
-        {this.allCartItems ? (
+        {this.state.totalNumberOfItems ? (
           <>
             <h2 className="cart-header">Cart</h2>
             {this.allCartItems.map((cartItem, i) => (
@@ -101,17 +63,18 @@ class CartDropdown extends React.Component {
                 key={i}
                 cartItem={cartItem}
                 cartItemID={`${i}-${cartItem.name.replaceAll(" ", "-")}`}
+                updateCartState={this.updateCartState}
               />
             ))}
 
             <h3>
               Tax 21%: {this.selectedCurrency.symbol}
-              {this.taxAmount}
+              {this.state.taxAmount}
             </h3>
-            <p>Quantity: {this.totalNumberOfItems}</p>
+            <p>Quantity: {this.state.totalNumberOfItems}</p>
             <p>
               Total: {this.selectedCurrency.symbol}
-              {this.totalAmount}
+              {this.state.totalAmount}
             </p>
             <button
               type="submit"
@@ -122,12 +85,11 @@ class CartDropdown extends React.Component {
             </button>
           </>
         ) : (
-          "Empty Cart"
+          "Cart is empty"
         )}
       </div>
     );
   }
 }
 
-// export default connect(mapStateToProps)(Cart);
 export default CartDropdown;

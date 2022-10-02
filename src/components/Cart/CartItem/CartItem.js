@@ -4,79 +4,72 @@ import "./CartItem.scss";
 class CartItem extends React.Component {
   constructor(props) {
     super(props);
-    const { cartItem, cartItemID } = this.props;
+    const { cartItem, cartItemID, updateCartState } = this.props;
     this.state = {
       cartItem: cartItem,
       cartItemID: cartItemID,
     };
+    this.updateCartState = updateCartState;
 
     this.incrementDecrementQuantity =
       this.incrementDecrementQuantity.bind(this);
   }
 
   incrementDecrementQuantity(procedureName) {
-    // console.log("procedureName: ", procedureName);
-    const allCartItems = JSON.parse(localStorage.getItem("items")) || false;
+    let allCartItems = JSON.parse(localStorage.getItem("items")) || false;
+    // if there is an item with the same selected attribute values
     // console.log("allCartItems", allCartItems);
-    // console.log("cartItem", this.cartItem);
-    if (
-      allCartItems &&
-      allCartItems.some(
-        (item) =>
-          item.name === this.state.cartItem.name &&
-          JSON.stringify(item.selectedAttributes) ===
-            JSON.stringify(this.state.cartItem.selectedAttributes)
-      )
-    ) {
-      if (allCartItems) {
-        const modifiedQuantity = allCartItems.map((item) => {
-          if (item.name === this.state.cartItem.name) {
-            if (procedureName === "increment") {
-              ++item.quantity;
-            } else {
-              --item.quantity;
-            }
-            console.log("item", item);
-            this.setState({ cartItem: item });
-            console.log("this.state", this.state);
-          }
+    // const found = allCartItems.find(
+    //   (item) =>
+    //     item.name === this.state.cartItem.name &&
+    //     JSON.stringify(item.selectedAttributes) ===
+    //       JSON.stringify(this.state.cartItem.selectedAttributes)
+    // );
 
-          return item;
-        });
-
-        console.log("modifiedQuantity", modifiedQuantity);
-        localStorage.setItem("items", JSON.stringify(modifiedQuantity));
+    // console.log("allCartItems before increment", allCartItems);
+    allCartItems.some((item, i) => {
+      if (
+        item.name === this.state.cartItem.name &&
+        JSON.stringify(item.selectedAttributes) ===
+          JSON.stringify(this.state.cartItem.selectedAttributes)
+      ) {
+        if (procedureName === "increment") {
+          // when + button was pressed
+          allCartItems[i].quantity++;
+        } else if (
+          procedureName === "decrement" &&
+          allCartItems[i].quantity === 1
+        ) {
+          // when - button was pressed and there only 1 such item was selected, remove the item from the cart list
+          allCartItems.splice(i, 1);
+          // empty out the current cart item to reflect the changes
+          return this.setState({ cartItem: "" });
+        } else {
+          // when - button was pressed and there was > 1 such item selected
+          allCartItems[i].quantity--;
+        }
+        // for reflecting quantity changes
+        return this.setState({ cartItem: item });
       }
-    }
+      return null;
+    });
+
+    localStorage.setItem("items", JSON.stringify(allCartItems));
+    this.updateCartState(allCartItems);
   }
   render() {
     const selectedCurrency =
       JSON.parse(localStorage.getItem("currency")) || false;
-    // console.log("selectedCurrency", selectedCurrency);
-    // const { cartItem, cartItemID } = this.props;
-    // console.log("cartItem", cartItem);
-    // console.log("cartItem", cartItem.allAttributes.length);
-    const price = this.state.cartItem.prices.find(
+
+    const price = this.state.cartItem?.prices?.find(
       (price) => price.currency.symbol === selectedCurrency.symbol
     );
 
     const { allAttributes, selectedAttributes } = this.state.cartItem;
-    // console.log("--->cartItem", cartItem);
-    // allAttributes.forEach((attribute) => {
-    //   console.log(attribute.id, attribute.items);
-    //   let itemValue = selectedAttributes[attribute.id];
-    //   attribute.items.forEach((item) => {
-    //     if (item.value === itemValue) {
-    //       console.log("item", item);
-    //     }
-    //   });
-    //   // if(attribute.id == selectedAttributes)
-    // });
 
-    if (this.state.cartItem.quantity > 0)
+    if (this.state.cartItem)
       return (
         <>
-          {/* TODO: ADD ALL THE ATTRIBUTES AND SELECTED_ATTRIBUTE_VALUE SEPARATELY WHEN SAVING THE ITEM SO WE CAN HIGHLIGHT THEM */}
           <div className="cart-item-details-container">
             {/* left details */}
             <div className="left-cart-details-container">
@@ -91,25 +84,6 @@ class CartItem extends React.Component {
                   {price.amount}
                 </p>
               </div>
-              {/* <div
-              className="text-attribute-container"
-              key={item.displayValue}
-            >
-              <input
-                id={`${attribute.id}-${item.value}`}
-                type="radio"
-                value={item.value}
-                className="text-attribute-input"
-                name={attribute.id}
-                required
-              />
-              <label
-                className="text-attribute-label"
-                htmlFor={`${attribute.id}-${item.value}`}
-              >
-                {item.displayValue}
-              </label>
-            </div> */}
               {allAttributes.map((attribute) => {
                 let itemValue = selectedAttributes[attribute.id];
                 return (
@@ -117,20 +91,45 @@ class CartItem extends React.Component {
                     <h4 className="details-header">{attribute.name}:</h4>
                     <div className="attribute-values">
                       {attribute.items.map((item) => {
-                        // console.log("itemValue ->>", selectedAttributes);
-                        // console.log("item ->>", item);
-                        return (
-                          <div
-                            className="text-attribute-container"
-                            key={item.displayValue}
-                          >
-                            <div>
+                        if (attribute.type === "text") {
+                          return (
+                            <div
+                              className="text-attribute-container"
+                              key={item.displayValue}
+                            >
+                              <div>
+                                <input
+                                  id={`${this.state.cartItemID}-${attribute.id}-${item.value}`}
+                                  type="radio"
+                                  value={item.value}
+                                  className="text-attribute-input"
+                                  defaultChecked={item.value === itemValue}
+                                  name={`${this.state.cartItemID}-${attribute.id}`}
+                                  required
+                                  disabled
+                                />
+                                <label
+                                  className={`${
+                                    item.value === itemValue ? "checked " : ""
+                                  }text-attribute-label`}
+                                  htmlFor={`${this.state.cartItemID}-${attribute.id}-${item.value}`}
+                                >
+                                  {item.value}
+                                </label>
+                              </div>
+                            </div>
+                          );
+                        } else {
+                          return (
+                            <div
+                              className="swatch-attribute-container"
+                              key={item.displayValue}
+                            >
                               <input
                                 id={`${this.state.cartItemID}-${attribute.id}-${item.value}`}
                                 type="radio"
                                 value={item.value}
-                                className="text-attribute-input"
-                                // TODO: FIX DEFAULT CHECKED VALUES
+                                className="swatch-attribute-input"
                                 defaultChecked={item.value === itemValue}
                                 name={`${this.state.cartItemID}-${attribute.id}`}
                                 required
@@ -139,29 +138,18 @@ class CartItem extends React.Component {
                               <label
                                 className={`${
                                   item.value === itemValue ? "checked " : ""
-                                }text-attribute-label`}
+                                }swatch-attribute-label`}
                                 htmlFor={`${this.state.cartItemID}-${attribute.id}-${item.value}`}
-                              >
-                                {item.value}
-                              </label>
+                                style={{ backgroundColor: item.value }}
+                              ></label>
                             </div>
-                          </div>
-                        );
+                          );
+                        }
                       })}
                     </div>
                   </div>
                 );
               })}
-              {/* allAttributes.forEach((attribute) => {
-              console.log(attribute.id, attribute.items);
-              let itemValue = selectedAttributes[attribute.id];
-              attribute.items.forEach((item) => {
-                if (item.value === itemValue) {
-                  console.log("item", item);
-                }
-              });
-              // if(attribute.id == selectedAttributes)
-            }); */}
               <div>{}</div>
             </div>
             <div className="right-cart-details-container">

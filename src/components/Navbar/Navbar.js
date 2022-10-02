@@ -19,7 +19,9 @@ class Navbar extends React.Component {
             }
           }}
         </Query>
+
         <RiShoppingBag2Fill className="bag-icon" />
+
         <Query query={GET_CURRENCIES}>
           {({ loading, data }) => {
             if (data) {

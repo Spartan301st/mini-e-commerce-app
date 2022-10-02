@@ -35,32 +35,26 @@ class CartLinks extends React.Component {
       selectedCurrency: lastSelectedCurrency || this.currencies[0],
     };
 
-    // for displaying/hiding currency menu
-    this.toggleCurrencyDropdownVisibility =
-      this.toggleCurrencyDropdownVisibility.bind(this);
-
-    // for displaying/hiding cart menu
-    this.toggleCartDropdownVisibility =
-      this.toggleCartDropdownVisibility.bind(this);
+    // for displaying/hiding dropdown menus
+    this.toggleDropdownVisibility = this.toggleDropdownVisibility.bind(this);
 
     // for instantly reflecting currency change
     this.updateSelectedCurrency = this.updateSelectedCurrency.bind(this);
   }
 
-  toggleCurrencyDropdownVisibility() {
-    this.setState({
-      currencyDropdownVisible: !this.state.currencyDropdownVisible,
-    });
-  }
-  toggleCartDropdownVisibility() {
-    this.setState({
-      cartDropdownVisible: !this.state.cartDropdownVisible,
-    });
+  toggleDropdownVisibility(menuName) {
+    if (menuName === "currency") {
+      this.setState({
+        currencyDropdownVisible: !this.state.currencyDropdownVisible,
+      });
+    } else {
+      this.setState({
+        cartDropdownVisible: !this.state.cartDropdownVisible,
+      });
+    }
   }
 
   updateSelectedCurrency(newCurrency) {
-    // TODO: REMOVE LATER
-    // this.setState({ selectedCurrency: newCurrency });
     localStorage.setItem("currency", JSON.stringify(newCurrency));
     // refresh page to reflect currency changes for all products
     window.location.reload(false);
@@ -72,7 +66,7 @@ class CartLinks extends React.Component {
         <div className="nav-currency-dropdown-container">
           <div
             className="dropdown-arrow-container"
-            onClick={this.toggleCurrencyDropdownVisibility}
+            onClick={() => this.toggleDropdownVisibility("currency")}
           >
             <p className="dropdown-currency-symbol">
               {this.state.selectedCurrency.symbol}
@@ -89,7 +83,7 @@ class CartLinks extends React.Component {
         </div>
         <div
           className="nav-cart-icon-container"
-          onClick={this.toggleCartDropdownVisibility}
+          onClick={() => this.toggleDropdownVisibility("cart")}
         >
           {this.totalItems > 0 && (
             <div className="cart-item-quantity-notifier">{this.totalItems}</div>

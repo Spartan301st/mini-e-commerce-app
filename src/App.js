@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Products from "./components/Products/Products";
 import ParticularProduct from "./components/ParticularProduct/ParticularProduct";
 import Cart from "./components/Cart/Cart";
+import Page404 from "./components/Page404/Page404";
 
 class App extends React.Component {
   render() {
@@ -36,7 +37,7 @@ class App extends React.Component {
             ))}
             <Route path="/cart" element={<Cart />} />
             {/* TODO: ADD NO PAGE FOUND */}
-            <Route path="*" element={<div>NO PAGE FOUND</div>} />
+            <Route path="*" element={<Page404 />} />
           </Routes>
         </Router>
       </div>
