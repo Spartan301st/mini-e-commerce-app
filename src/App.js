@@ -36,7 +36,6 @@ class App extends React.Component {
               />
             ))}
             <Route path="/cart" element={<Cart />} />
-            {/* TODO: ADD NO PAGE FOUND */}
             <Route path="*" element={<Page404 />} />
           </Routes>
         </Router>

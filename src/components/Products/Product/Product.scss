@@ -24,24 +24,13 @@
         justify-content: center;
         align-items: center;
     }
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: space-between;
     .product-image-container {
         width: 100%;
         height: 80%;
-        overflow: hidden;
-        
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
-
-        
+        overflow: hidden;       
 
         .product-image {
-            // display: block;
             width: 100%;
-            // height: 100%;
             object-fit: cover;
             transition-duration: 1s;
             transition-timing-function: ease-out;
@@ -52,9 +41,6 @@
         }
     }
     .out-of-stock{
-        // .product-image, .product-title, .product-price{
-        //     opacity:0.3;
-        // }
         position: relative;
         h3 {
             position: absolute;
@@ -74,7 +60,6 @@
     }
     .product-price {
         color: #1D1F22;
-        // color: black
         font-weight: 500;
     }
     &:hover {

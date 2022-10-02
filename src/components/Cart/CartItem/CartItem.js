@@ -17,18 +17,9 @@ class CartItem extends React.Component {
 
   incrementDecrementQuantity(procedureName) {
     let allCartItems = JSON.parse(localStorage.getItem("items")) || false;
-    // if there is an item with the same selected attribute values
-    // console.log("allCartItems", allCartItems);
-    // const found = allCartItems.find(
-    //   (item) =>
-    //     item.name === this.state.cartItem.name &&
-    //     JSON.stringify(item.selectedAttributes) ===
-    //       JSON.stringify(this.state.cartItem.selectedAttributes)
-    // );
-
-    // console.log("allCartItems before increment", allCartItems);
     allCartItems.some((item, i) => {
       if (
+        // if there is an item with the same selected attribute values
         item.name === this.state.cartItem.name &&
         JSON.stringify(item.selectedAttributes) ===
           JSON.stringify(this.state.cartItem.selectedAttributes)
@@ -56,6 +47,8 @@ class CartItem extends React.Component {
 
     localStorage.setItem("items", JSON.stringify(allCartItems));
     this.updateCartState(allCartItems);
+    // reload page to reflect changes on other components
+    window.location.reload(false);
   }
   render() {
     const selectedCurrency =
@@ -152,6 +145,7 @@ class CartItem extends React.Component {
               })}
               <div>{}</div>
             </div>
+            {/* right details */}
             <div className="right-cart-details-container">
               <div className="cart-item-amount-increment-container">
                 <button

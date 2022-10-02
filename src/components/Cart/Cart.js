@@ -85,7 +85,7 @@ class CartDropdown extends React.Component {
             </button>
           </>
         ) : (
-          "Cart is empty"
+          <h3>Cart is empty</h3>
         )}
       </div>
     );

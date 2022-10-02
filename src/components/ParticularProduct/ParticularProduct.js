@@ -2,7 +2,7 @@ import React from "react";
 import "./ParticularProduct.scss";
 import { Query } from "@apollo/client/react/components";
 import GET_SINGLE_PRODUCT from "../../queries/getSingleProduct";
-import ThubnailPics from "./ThubnailPics/ThubnailPics";
+import ThumbnailPics from "./ThumbnailPics/ThumbnailPics";
 import ProductDetails from "./ProductDetails/ProductDetails";
 import fetchCurrentPath from "../../utils/fetchCurrentPath";
 
@@ -33,7 +33,7 @@ class ParticularProduct extends React.Component {
                     <div className="product-thubnail-pictures">
                       {product.gallery.map((imageURL, i) => {
                         return (
-                          <ThubnailPics
+                          <ThumbnailPics
                             key={`${product.id}-${i}`}
                             name={`${product.name} - ${i}`}
                             imageURL={imageURL}
