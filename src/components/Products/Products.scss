@@ -1,19 +1,18 @@
-.category-products-container {
+.products {
     width: 100%;
-    padding: 1rem 2rem;
-    h1 {
+    max-width: 1290px;
+    margin: 0 auto;
+    &__header {
         text-transform: capitalize;
         font-size: 2.625rem;
         font-weight: 400;
         margin: 3rem 0;
     }
-    .all-products-container {
+    &__categoryProducts {
         width: 100%;
         overflow-x: hidden;
         min-height: 100vh;
-        
         position: relative;
-        
         display: grid;
         grid-template-columns: 30% 30% 30%;
         gap: 50px 50px;

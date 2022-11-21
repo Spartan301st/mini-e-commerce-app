@@ -1,24 +1,34 @@
+import { Query } from "@apollo/client/react/components";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import GET_CATEGORIES from "../../../queries/getCategories";
 
 import "./NavLinks.scss";
 class NavLinks extends React.Component {
   render() {
-    const { categories } = this.props;
     return (
-      <div className="navlinks-container">
-        {categories.map((category, i) => (
-          <NavLink
-            key={i}
-            className={({ isActive }) =>
-              `navlink${isActive ? " active-link" : ""}`
+      <nav className="navbar__navlinksContainer">
+        {/* fetched categories */}
+        <Query query={GET_CATEGORIES}>
+          {({ loading, data }) => {
+            if (data) {
+              const { categories } = data;
+              // display categories as nav links
+              return categories.map((category, i) => (
+                <NavLink
+                  key={i}
+                  className={({ isActive }) =>
+                    `navlink${isActive ? " active-link" : ""}`
+                  }
+                  to={category.name}
+                >
+                  {category.name}
+                </NavLink>
+              ));
             }
-            to={category.name}
-          >
-            {category.name}
-          </NavLink>
-        ))}
-      </div>
+          }}
+        </Query>
+      </nav>
     );
   }
 }

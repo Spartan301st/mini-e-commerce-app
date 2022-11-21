@@ -1,5 +1,4 @@
 import React from "react";
-import GET_CATEGORIES from "../../queries/getCategories";
 import "./Navbar.scss";
 import { RiShoppingBag2Fill } from "react-icons/ri";
 import CartLinks from "./CartLinks/CartLinks";
@@ -10,27 +9,22 @@ import GET_CURRENCIES from "../../queries/getCurrencies";
 class Navbar extends React.Component {
   render() {
     return (
-      <nav className="navbar">
-        <Query query={GET_CATEGORIES}>
-          {({ loading, data }) => {
-            if (data) {
-              const { categories } = data;
-              return <NavLinks categories={categories} />;
-            }
-          }}
-        </Query>
+      <section className="navbar">
+        <div className="maxWidthLimiter">
+          <NavLinks />
 
-        <RiShoppingBag2Fill className="bag-icon" />
+          <RiShoppingBag2Fill className="navbar__bagIcon" />
 
-        <Query query={GET_CURRENCIES}>
-          {({ loading, data }) => {
-            if (data) {
-              const { currencies } = data;
-              return <CartLinks currencies={currencies} />;
-            }
-          }}
-        </Query>
-      </nav>
+          <Query query={GET_CURRENCIES}>
+            {({ loading, data }) => {
+              if (data) {
+                const { currencies } = data;
+                return <CartLinks currencies={currencies} />;
+              }
+            }}
+          </Query>
+        </div>
+      </section>
     );
   }
 }

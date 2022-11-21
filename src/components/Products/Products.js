@@ -10,35 +10,30 @@ class Products extends React.Component {
   render() {
     const pathName = fetchPathname(1);
     return (
-      <>
-        <div className="category-products-container">
-          <h1>{pathName}</h1>
-          <div className="all-products-container">
-            <Query query={GET_PRODUCTS} variables={{ category: pathName }}>
-              {({ loading, data }) => {
-                if (data) {
-                  const {
-                    category: { products },
-                  } = data;
-                  return products.map((product) =>
-                    product.inStock ? (
-                      <Link key={product.id} to={product.id}>
-                        <Product product={product} productAvailable={true} />
-                      </Link>
-                    ) : (
-                      <Product
-                        key={product.id}
-                        product={product}
-                        productAvailable={false}
-                      />
-                    )
-                  );
-                }
-              }}
-            </Query>
-          </div>
+      <section className="products">
+        <h1 className="products__header">{pathName}</h1>
+
+        <div className="products__categoryProducts">
+          {/* fetch products for the given category */}
+          <Query query={GET_PRODUCTS} variables={{ category: pathName }}>
+            {({ loading, data }) => {
+              if (data) {
+                const {
+                  category: { products },
+                } = data;
+                return products.map((product) => (
+                  <Link key={product.id} to={product.id}>
+                    <Product
+                      product={product}
+                      productAvailable={product.inStock}
+                    />
+                  </Link>
+                ));
+              }
+            }}
+          </Query>
         </div>
-      </>
+      </section>
     );
   }
 }

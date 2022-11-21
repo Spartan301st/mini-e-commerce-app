@@ -1,0 +1,5 @@
+1. Create data context
+    1.1. Start with empty state ??? (or state with existing keys and empty values?)
+    1.2. In the constructor of the App component fetch the categories data and setState state. Only after that pass data to navbar for categories and categories for routes
+
+Only save data to context when currency is selected or the product is added to the card

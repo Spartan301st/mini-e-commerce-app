@@ -6,7 +6,7 @@ import CartItem from "./CartItem/CartItem";
 class CartDropdown extends React.Component {
   constructor(props) {
     super(props);
-    this.allCartItems = JSON.parse(localStorage.getItem("items")) || false;
+    this.allCartItems = JSON.parse(localStorage.getItem("items")) || [];
     this.selectedCurrency = JSON.parse(localStorage.getItem("currency"));
 
     this.totalAmount = 0;

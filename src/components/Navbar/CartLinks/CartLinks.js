@@ -5,6 +5,7 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 import CurrencyDropdown from "../CurrencyDropdown/CurrencyDropdown";
 import CartDropdown from "./CartDropdown/CartDropdown";
+import { CurrencyConsumer } from "../../../context/currencyContext";
 
 class CartLinks extends React.Component {
   constructor(props) {
@@ -14,9 +15,10 @@ class CartLinks extends React.Component {
     const { currencies } = props;
     this.currencies = currencies;
 
-    // get last selected currency or set new one if non was selected earlies
+    // get last selected currency or set new one if non was selected earlier
     const lastSelectedCurrency =
       JSON.parse(localStorage.getItem("currency")) || false;
+
     if (!lastSelectedCurrency) {
       localStorage.setItem("currency", JSON.stringify(currencies[0]));
     }
@@ -56,21 +58,31 @@ class CartLinks extends React.Component {
 
   updateSelectedCurrency(newCurrency) {
     localStorage.setItem("currency", JSON.stringify(newCurrency));
-    // refresh page to reflect currency changes for all products
-    window.location.reload(false);
   }
 
   render() {
     return (
       <div className="card-links-container">
+        {/* currency related */}
         <div className="nav-currency-dropdown-container">
           <div
             className="dropdown-arrow-container"
             onClick={() => this.toggleDropdownVisibility("currency")}
           >
-            <p className="dropdown-currency-symbol">
-              {this.state.selectedCurrency.symbol}
-            </p>
+            <CurrencyConsumer>
+              {(value) => {
+                const { currentCurrency } = value;
+                return (
+                  <span className="dropdown-currency-symbol">
+                    {/* update currency selected without refreshing*/}
+                    {Object.keys(currentCurrency).length
+                      ? currentCurrency.symbol
+                      : this.state.selectedCurrency.symbol}
+                  </span>
+                );
+              }}
+            </CurrencyConsumer>
+
             {!this.state.currencyDropdownVisible && <FiChevronDown />}
             {this.state.currencyDropdownVisible && <FiChevronUp />}
           </div>
@@ -81,6 +93,7 @@ class CartLinks extends React.Component {
             />
           )}
         </div>
+        {/* cart related */}
         <div
           className="nav-cart-icon-container"
           onClick={() => this.toggleDropdownVisibility("cart")}

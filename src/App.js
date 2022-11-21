@@ -6,39 +6,63 @@ import {
 } from "react-router-dom";
 import React from "react";
 import "./App.css";
+
 import Navbar from "./components/Navbar/Navbar";
 import Products from "./components/Products/Products";
 import ParticularProduct from "./components/ParticularProduct/ParticularProduct";
 import Cart from "./components/Cart/Cart";
 import Page404 from "./components/Page404/Page404";
 
+import { CurrencyProvider } from "./context/currencyContext";
+import { Query } from "@apollo/client/react/components";
+import GET_CATEGORIES from "./queries/getCategories";
+
 class App extends React.Component {
   render() {
-    const availableCategories = ["all", "clothes", "tech"];
     return (
       <div className="App">
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Navigate replace to="/all" />} />
-            {availableCategories.map((category, i) => (
-              <Route
-                key={`category-${i}`}
-                path={`/${category}`}
-                element={<Products />}
-              />
-            ))}
-            {availableCategories.map((category, i) => (
-              <Route
-                key={`product-${i}`}
-                path={`/${category}/:id`}
-                element={<ParticularProduct />}
-              />
-            ))}
-            <Route path="/cart" element={<Cart />} />
-            <Route path="*" element={<Page404 />} />
-          </Routes>
-        </Router>
+        <CurrencyProvider>
+          <Router>
+            <Navbar />
+            <Query query={GET_CATEGORIES}>
+              {({ loading, data }) => {
+                if (data) {
+                  // fetching all the categories
+                  const { categories: availableCategories } = data;
+                  return (
+                    <Routes>
+                      {/* home page redirect to /all */}
+                      <Route
+                        path="/"
+                        element={<Navigate replace to="/all" />}
+                      />
+                      {/* available products page for the given category */}
+                      {availableCategories.map((category, i) => (
+                        <Route
+                          key={`category-${i}`}
+                          path={`/${category.name}`}
+                          element={<Products />}
+                        />
+                      ))}
+
+                      {/* particular product page for the given product */}
+                      {availableCategories.map((category, i) => (
+                        <Route
+                          key={`product-${i}`}
+                          path={`/${category.name}/:id`}
+                          element={<ParticularProduct />}
+                        />
+                      ))}
+
+                      <Route path="/cart" element={<Cart />} />
+                      <Route path="*" element={<Page404 />} />
+                    </Routes>
+                  );
+                }
+              }}
+            </Query>
+          </Router>
+        </CurrencyProvider>
       </div>
     );
   }
