@@ -45,7 +45,9 @@ class Product extends React.Component {
           </div>
         )}
         <div className="product-title-price-container">
-          <h2 className="product-title">{this.product.name}</h2>
+          <h2 className="product-title">
+            {this.product.brand} {this.product.name}
+          </h2>
           <CurrencyConsumer>
             {(value) => {
               const { currentCurrency } = value;

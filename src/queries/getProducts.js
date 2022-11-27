@@ -14,6 +14,7 @@ const GET_PRODUCTS = gql`
           amount
         }
         inStock
+        brand
       }
     }
   }
