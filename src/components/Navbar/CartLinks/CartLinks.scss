@@ -1,10 +1,12 @@
 .card-links-container {
     display: flex;
     justify-content: space-between;
+    height: 100%;
     
     .nav-currency-dropdown-container {
       display: flex;
       margin-right: 5px;
+      position: relative;
       .dropdown-arrow-container {
         display: flex;
         align-items: flex-end;
