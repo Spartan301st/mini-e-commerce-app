@@ -6,6 +6,9 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import CurrencyDropdown from "../CurrencyDropdown/CurrencyDropdown";
 import CartDropdown from "./CartDropdown/CartDropdown";
 import { CurrencyConsumer } from "../../../context/currencyContext";
+import ItemsContext from "../../../context/itemsContext";
+import fetchItemsFromCache from "../../../utils/fetchItemsFromCache";
+import calcTotItems from "../../../utils/calculation/calcTotItems";
 
 class CartLinks extends React.Component {
   constructor(props) {
@@ -98,9 +101,24 @@ class CartLinks extends React.Component {
           className="nav-cart-icon-container"
           onClick={() => this.toggleDropdownVisibility("cart")}
         >
-          {this.totalItems > 0 && (
-            <div className="cart-item-quantity-notifier">{this.totalItems}</div>
-          )}
+          <ItemsContext>
+            {(value) => {
+              const { selectedItems } = value;
+
+              // assign all selected cart items
+              const allCartItems = selectedItems.length
+                ? selectedItems
+                : fetchItemsFromCache();
+              const totalNumberOfItems = calcTotItems(allCartItems);
+              return (
+                allCartItems.length && (
+                  <div className="cart-item-quantity-notifier">
+                    {totalNumberOfItems}
+                  </div>
+                )
+              );
+            }}
+          </ItemsContext>
           <BsCart2 className="nav-cart-icon" />
           {this.state.cartDropdownVisible && <CartDropdown />}
         </div>

@@ -12,7 +12,7 @@ export class ItemsProvider extends React.Component {
   setItems = (item) => {
     this.setState({
       ...this.state,
-      selectedItems: [...this.state.selectedItems, item],
+      selectedItems: item,
     });
   };
 

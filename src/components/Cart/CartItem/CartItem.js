@@ -1,88 +1,81 @@
 import React from "react";
+import setItemsToCache from "../../../utils/setItemsToCache";
+import findPrice from "../../../utils/findPrice";
 import "./CartItem.scss";
 
 class CartItem extends React.Component {
   constructor(props) {
     super(props);
-    const { cartItem, cartItemID, updateCartState } = this.props;
-    this.state = {
-      cartItem: cartItem,
-      cartItemID: cartItemID,
-    };
-    this.updateCartState = updateCartState;
+    const { cartItemID, setItems } = this.props;
+    this.cartItemID = cartItemID;
+    this.setItems = setItems;
 
     this.incrementDecrementQuantity =
       this.incrementDecrementQuantity.bind(this);
   }
-
-  incrementDecrementQuantity(procedureName) {
-    let allCartItems = JSON.parse(localStorage.getItem("items")) || false;
+  incrementDecrementQuantity(procedureName, selectedItems, cartItem) {
+    // reassign selectedItems
+    let allCartItems = selectedItems;
+    // loop through the items
     allCartItems.some((item, i) => {
       if (
         // if there is an item with the same selected attribute values
-        item.name === this.state.cartItem.name &&
+        item.name === cartItem.name &&
         JSON.stringify(item.selectedAttributes) ===
-          JSON.stringify(this.state.cartItem.selectedAttributes)
+          JSON.stringify(cartItem.selectedAttributes)
       ) {
+        // when + button was pressed
         if (procedureName === "increment") {
-          // when + button was pressed
           allCartItems[i].quantity++;
-        } else if (
+        }
+        // when - button was pressed and there is only 1 such item was selected, remove the item from the cart list
+        else if (
           procedureName === "decrement" &&
           allCartItems[i].quantity === 1
         ) {
-          // when - button was pressed and there only 1 such item was selected, remove the item from the cart list
+          // remove item fro mthe list
           allCartItems.splice(i, 1);
-          // empty out the current cart item to reflect the changes
-          return this.setState({ cartItem: "" });
-        } else {
-          // when - button was pressed and there was > 1 such item selected
+        }
+        // when - button was pressed and there was > 1 such item selected
+        else {
           allCartItems[i].quantity--;
         }
-        // for reflecting quantity changes
-        return this.setState({ cartItem: item });
       }
       return null;
     });
-
-    localStorage.setItem("items", JSON.stringify(allCartItems));
-    this.updateCartState(allCartItems);
-    // reload page to reflect changes on other components
-    window.location.reload(false);
+    setItemsToCache(allCartItems);
+    this.setItems(allCartItems);
   }
   render() {
-    const selectedCurrency =
-      JSON.parse(localStorage.getItem("currency")) || false;
+    const { cartItem, selectedItems, selectedCurrency } = this.props;
+    const price = findPrice(cartItem, selectedCurrency);
+    const { allAttributes, selectedAttributes } = cartItem;
 
-    const price = this.state.cartItem?.prices?.find(
-      (price) => price.currency.symbol === selectedCurrency.symbol
-    );
-
-    const { allAttributes, selectedAttributes } = this.state.cartItem;
-
-    if (this.state.cartItem)
+    if (cartItem)
       return (
         <>
           <div className="cart-item-details-container">
             {/* left details */}
             <div className="left-cart-details-container">
               <div className="brand-naming-container">
-                <h2>{this.state.cartItem.brand}</h2>
-                <h3>{this.state.cartItem.name}</h3>
+                <h2>{cartItem.brand}</h2>
+                <h3>{cartItem.name}</h3>
               </div>
 
               <div className="cart-item-price-container">
                 <p className="cart-item-price">
-                  {price.currency.symbol}
+                  {selectedCurrency.symbol}
                   {price.amount}
                 </p>
               </div>
+              {/* rendering corresponding attribute names of the given cart item */}
               {allAttributes.map((attribute) => {
-                let itemValue = selectedAttributes[attribute.id];
+                const itemValue = selectedAttributes[attribute.id];
                 return (
                   <div className="attribute-container" key={attribute.id}>
                     <h4 className="details-header">{attribute.name}:</h4>
                     <div className="attribute-values">
+                      {/* rendering corresponding attribute values for each attribute name (assuming there are only text and non-text types) */}
                       {attribute.items.map((item) => {
                         if (attribute.type === "text") {
                           return (
@@ -92,12 +85,12 @@ class CartItem extends React.Component {
                             >
                               <div>
                                 <input
-                                  id={`${this.state.cartItemID}-${attribute.id}-${item.value}`}
+                                  id={`${this.cartItemID}-${attribute.id}-${item.value}`}
                                   type="radio"
                                   value={item.value}
                                   className="text-attribute-input"
                                   defaultChecked={item.value === itemValue}
-                                  name={`${this.state.cartItemID}-${attribute.id}`}
+                                  name={`${this.cartItemID}-${attribute.id}`}
                                   required
                                   disabled
                                 />
@@ -105,7 +98,7 @@ class CartItem extends React.Component {
                                   className={`${
                                     item.value === itemValue ? "checked " : ""
                                   }text-attribute-label`}
-                                  htmlFor={`${this.state.cartItemID}-${attribute.id}-${item.value}`}
+                                  htmlFor={`${this.cartItemID}-${attribute.id}-${item.value}`}
                                 >
                                   {item.value}
                                 </label>
@@ -119,12 +112,12 @@ class CartItem extends React.Component {
                               key={item.displayValue}
                             >
                               <input
-                                id={`${this.state.cartItemID}-${attribute.id}-${item.value}`}
+                                id={`${this.cartItemID}-${attribute.id}-${item.value}`}
                                 type="radio"
                                 value={item.value}
                                 className="swatch-attribute-input"
                                 defaultChecked={item.value === itemValue}
-                                name={`${this.state.cartItemID}-${attribute.id}`}
+                                name={`${this.cartItemID}-${attribute.id}`}
                                 required
                                 disabled
                               />
@@ -132,7 +125,7 @@ class CartItem extends React.Component {
                                 className={`${
                                   item.value === itemValue ? "checked " : ""
                                 }swatch-attribute-label`}
-                                htmlFor={`${this.state.cartItemID}-${attribute.id}-${item.value}`}
+                                htmlFor={`${this.cartItemID}-${attribute.id}-${item.value}`}
                                 style={{ backgroundColor: item.value }}
                               ></label>
                             </div>
@@ -143,28 +136,36 @@ class CartItem extends React.Component {
                   </div>
                 );
               })}
-              <div>{}</div>
             </div>
             {/* right details */}
             <div className="right-cart-details-container">
               <div className="cart-item-amount-increment-container">
                 <button
-                  onClick={() => this.incrementDecrementQuantity("increment")}
+                  onClick={() =>
+                    this.incrementDecrementQuantity(
+                      "increment",
+                      selectedItems,
+                      cartItem
+                    )
+                  }
                 >
                   +
                 </button>
-                <p>{this.state.cartItem.quantity}</p>
+                <p>{cartItem.quantity}</p>
                 <button
-                  onClick={() => this.incrementDecrementQuantity("decrement")}
+                  onClick={() =>
+                    this.incrementDecrementQuantity(
+                      "decrement",
+                      selectedItems,
+                      cartItem
+                    )
+                  }
                 >
                   -
                 </button>
               </div>
               <div className="cart-item-img-container">
-                <img
-                  src={this.state.cartItem.imageURL}
-                  alt={this.state.cartItem.name}
-                />
+                <img src={cartItem.imageURL} alt={cartItem.name} />
               </div>
             </div>
           </div>
