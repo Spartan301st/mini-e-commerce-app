@@ -31,7 +31,8 @@ class CartDropdown extends React.Component {
                   <h2 className="my-bag">
                     My bag,{" "}
                     <span className="my-bag-quantity">
-                      {totalNumberOfItems} items
+                      {totalNumberOfItems} item
+                      {totalNumberOfItems === 1 ? "" : "s"}
                     </span>
                   </h2>
                   <CurrencyConsumer>

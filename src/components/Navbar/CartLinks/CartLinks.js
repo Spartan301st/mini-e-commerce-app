@@ -33,6 +33,7 @@ class CartLinks extends React.Component {
         0
       ) || 0;
 
+    // TODO: CHECK WHY CARTDROPDOWN DISAPPEARS ON + OR - BUTTON CLICKS
     // component state
     this.state = {
       currencyDropdownVisible: false,
@@ -97,29 +98,34 @@ class CartLinks extends React.Component {
           )}
         </div>
         {/* cart related */}
-        <div
-          className="nav-cart-icon-container"
-          onClick={() => this.toggleDropdownVisibility("cart")}
-        >
-          <ItemsContext>
-            {(value) => {
-              const { selectedItems } = value;
+        <div className="nav-cart-overlay">
+          <div
+            className="nav-cart-icon-container"
+            onClick={() => this.toggleDropdownVisibility("cart")}
+          >
+            <BsCart2 className="nav-cart-icon" />
+            <ItemsContext>
+              {(value) => {
+                const { selectedItems } = value;
 
-              // assign all selected cart items
-              const allCartItems = selectedItems.length
-                ? selectedItems
-                : fetchItemsFromCache();
-              const totalNumberOfItems = calcTotItems(allCartItems);
-              return (
-                allCartItems.length && (
-                  <div className="cart-item-quantity-notifier">
-                    {totalNumberOfItems}
-                  </div>
-                )
-              );
-            }}
-          </ItemsContext>
-          <BsCart2 className="nav-cart-icon" />
+                // assign all selected cart items
+                const allCartItems = selectedItems.length
+                  ? selectedItems
+                  : fetchItemsFromCache();
+                const totalNumberOfItems = calcTotItems(allCartItems);
+                return (
+                  totalNumberOfItems > 0 && (
+                    <div
+                      className="cart-item-quantity-notifier"
+                      onClick={() => this.toggleDropdownVisibility("cart")}
+                    >
+                      {totalNumberOfItems}
+                    </div>
+                  )
+                );
+              }}
+            </ItemsContext>
+          </div>
           {this.state.cartDropdownVisible && <CartDropdown />}
         </div>
       </div>

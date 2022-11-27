@@ -141,6 +141,7 @@ class CartItem extends React.Component {
             <div className="right-cart-details-container">
               <div className="cart-item-amount-increment-container">
                 <button
+                  type="button"
                   onClick={() =>
                     this.incrementDecrementQuantity(
                       "increment",
@@ -153,6 +154,7 @@ class CartItem extends React.Component {
                 </button>
                 <p>{cartItem.quantity}</p>
                 <button
+                  type="button"
                   onClick={() =>
                     this.incrementDecrementQuantity(
                       "decrement",

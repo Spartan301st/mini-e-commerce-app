@@ -15,9 +15,10 @@
         }
       }
     }
+    .nav-cart-overlay{
+      position: relative;
     .nav-cart-icon-container {
       width: 20px;
-      position: relative;
       cursor: pointer;
       .cart-item-quantity-notifier {
         position: absolute;
@@ -34,4 +35,5 @@
         align-items:center;
       }
     }
+  }
   }
