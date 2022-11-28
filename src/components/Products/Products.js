@@ -4,7 +4,6 @@ import { Query } from "@apollo/client/react/components";
 import GET_PRODUCTS from "../../queries/getProducts";
 import Product from "./Product/Product";
 import fetchPathname from "../../utils/fetchCurrentPath";
-import { Link } from "react-router-dom";
 
 class Products extends React.Component {
   render() {
@@ -18,16 +17,16 @@ class Products extends React.Component {
           <Query query={GET_PRODUCTS} variables={{ category: pathName }}>
             {({ loading, data }) => {
               if (data) {
+                console.log(data);
                 const {
                   category: { products },
                 } = data;
                 return products.map((product) => (
-                  <Link key={product.id} to={product.id}>
-                    <Product
-                      product={product}
-                      productAvailable={product.inStock}
-                    />
-                  </Link>
+                  <Product
+                    key={product.id}
+                    product={product}
+                    productAvailable={product.inStock}
+                  />
                 ));
               }
             }}

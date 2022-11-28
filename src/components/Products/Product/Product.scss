@@ -18,11 +18,16 @@
         font-size: 2rem;
         transition-duration: 1s;
         transition-timing-function: ease-out; 
+        cursor: pointer;
     }
     &:hover .to-product-page-cart-indicator {
         display: flex;
         justify-content: center;
         align-items: center;
+        
+    }
+    .to-product-page-cart-indicator:hover {
+        background-color: #479f5e;
     }
     .product-image-container {
         width: 100%;
