@@ -29,11 +29,13 @@ class ProductDetails extends React.Component {
       brand: product.brand,
       name: product.name,
       prices: product.prices,
-      imageURL: product.gallery[0],
+      // imageURL: product.gallery[0],
+      gallery: product.gallery,
       allAttributes: [...product.attributes],
       selectedAttributes: {},
       quantity: 0,
     };
+    console.log(cartProductData.gallery);
 
     // add newly selected attributes to the final data to be saved
     for (let [key, value] of formData.entries()) {

@@ -23,6 +23,8 @@ class CartDropdown extends React.Component {
             const allCartItems = selectedItems.length
               ? selectedItems
               : fetchItemsFromCache();
+            // TODO: CHECK IF ALL THE GALLERY IMAGES ARE AVAILABLE FOR allCartItems
+            console.log("allCartItems", allCartItems);
             // calculate total number of items according all the selected items
             const totalNumberOfItems = calcTotItems(allCartItems);
 

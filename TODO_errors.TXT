@@ -1,6 +1,4 @@
 TODO: 
-- The green button on the product card should add the product to the cart with the default attributes, not redirect to PDP
-- The image slider in the cart is not implemented
 - dangerouslySetInnerHTML should not be used
 
 DONE: 
@@ -14,3 +12,5 @@ DONE:
 - If only one item in the cart should be written 1 item, not 1 items
 - The styling of currency switcher is wrong, the grey background should be on hover only
 - A brand is not added to the product card
+- The green button on the product card should add the product to the cart with the default attributes, not redirect to PDP
+- The image slider in the cart is not implemented

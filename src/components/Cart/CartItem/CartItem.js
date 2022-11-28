@@ -2,6 +2,8 @@ import React from "react";
 import setItemsToCache from "../../../utils/setItemsToCache";
 import findPrice from "../../../utils/findPrice";
 import "./CartItem.scss";
+import switchImage from "../../../utils/switchImage";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
 class CartItem extends React.Component {
   constructor(props) {
@@ -9,6 +11,10 @@ class CartItem extends React.Component {
     const { cartItemID, setItems } = this.props;
     this.cartItemID = cartItemID;
     this.setItems = setItems;
+
+    this.state = {
+      selectedImageIndex: 0,
+    };
 
     this.incrementDecrementQuantity =
       this.incrementDecrementQuantity.bind(this);
@@ -167,7 +173,42 @@ class CartItem extends React.Component {
                 </button>
               </div>
               <div className="cart-item-img-container">
-                <img src={cartItem.imageURL} alt={cartItem.name} />
+                <img
+                  src={cartItem.gallery[this.state.selectedImageIndex]}
+                  alt={cartItem.name}
+                />
+                {cartItem.gallery.length > 1 && (
+                  <div className="cart-item-img-switcher-container">
+                    <button
+                      className="cart-item-img-switcher"
+                      onClick={() =>
+                        this.setState({
+                          selectedImageIndex: switchImage(
+                            this.state.selectedImageIndex,
+                            cartItem.gallery.length,
+                            "left"
+                          ),
+                        })
+                      }
+                    >
+                      <BsChevronLeft className="cart-item-img-switcher-btn" />
+                    </button>
+                    <button
+                      className="cart-item-img-switcher"
+                      onClick={() =>
+                        this.setState({
+                          selectedImageIndex: switchImage(
+                            this.state.selectedImageIndex,
+                            cartItem.gallery.length,
+                            "right"
+                          ),
+                        })
+                      }
+                    >
+                      <BsChevronRight className="cart-item-img-switcher-btn" />
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
