@@ -6,9 +6,7 @@ import { CurrencyConsumer } from "../../../context/currencyContext";
 import fetchCurrencyFromCache from "../../../utils/fetchCurrencyFromCache";
 import findPrice from "../../../utils/findPrice";
 
-function createMarkup(markup) {
-  return { __html: markup };
-}
+import { Markup } from "interweave";
 
 class ProductDetails extends React.Component {
   constructor(props) {
@@ -29,7 +27,6 @@ class ProductDetails extends React.Component {
       brand: product.brand,
       name: product.name,
       prices: product.prices,
-      // imageURL: product.gallery[0],
       gallery: product.gallery,
       allAttributes: [...product.attributes],
       selectedAttributes: {},
@@ -183,7 +180,7 @@ class ProductDetails extends React.Component {
             );
           }}
         </ItemsConsumer>
-        <div dangerouslySetInnerHTML={createMarkup(product.description)}></div>
+        <Markup content={product.description} />
       </div>
     );
   }

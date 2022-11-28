@@ -1,5 +1,5 @@
 TODO: 
-- dangerouslySetInnerHTML should not be used
+
 
 DONE: 
 - The project is starting with the error, apollo/client should be added as a dependency, not installed on your computer globally
@@ -14,3 +14,4 @@ DONE:
 - A brand is not added to the product card
 - The green button on the product card should add the product to the cart with the default attributes, not redirect to PDP
 - The image slider in the cart is not implemented
+- dangerouslySetInnerHTML should not be used

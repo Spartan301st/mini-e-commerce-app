@@ -38,7 +38,6 @@ class Product extends React.Component {
       name: product.name,
       prices: product.prices,
       gallery: product.gallery,
-      // imageURL: product.gallery[0],
       // allAttributes: [...product.attributes],
       allAttributes: [],
       selectedAttributes: {},
