@@ -1,23 +1,20 @@
 .products {
     width: 100%;
-    max-width: 1290px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
     &__header {
         text-transform: capitalize;
-        font-size: 2.625rem;
-        font-weight: 400;
-        margin: 3rem 0;
+        font-size: var(--title-large);
+        font-weight: var(--font-standard);
+        margin-top: 80px;
     }
     &__categoryProducts {
         width: 100%;
         overflow-x: hidden;
-        min-height: 100vh;
         position: relative;
         display: grid;
-        grid-template-columns: 30% 30% 30%;
-        gap: 50px 50px;
-        justify-content: space-between;
-    
-        
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 100px 50px;
     }
 }

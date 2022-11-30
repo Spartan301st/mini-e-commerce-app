@@ -9,7 +9,7 @@ class Products extends React.Component {
   render() {
     const pathName = fetchPathname(1);
     return (
-      <section className="products">
+      <main className="products maxWidthLimiter">
         <h1 className="products__header">{pathName}</h1>
 
         <div className="products__categoryProducts">
@@ -17,22 +17,17 @@ class Products extends React.Component {
           <Query query={GET_PRODUCTS} variables={{ category: pathName }}>
             {({ loading, data }) => {
               if (data) {
-                console.log(data);
                 const {
                   category: { products },
                 } = data;
                 return products.map((product) => (
-                  <Product
-                    key={product.id}
-                    product={product}
-                    productAvailable={product.inStock}
-                  />
+                  <Product key={product.id} product={product} />
                 ));
               }
             }}
           </Query>
         </div>
-      </section>
+      </main>
     );
   }
 }

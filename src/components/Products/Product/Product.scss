@@ -1,79 +1,103 @@
-.product-container {
-    height: 600px;
+.product {
+    height: auto;
     padding: 1rem;
     transition-duration: 1s;
     transition-timing-function: ease-out;
     position: relative;
-    .to-product-page-cart-indicator {
-        position: absolute;
-        width: 75px;
-        height: 75px;
-        border-radius: 50%;
-        background-color: #5ECE7B;
-        z-index: 100;
-        bottom: 75px;
-        right: 20px;
-        display:none;
-        color: white;
-        font-size: 2rem;
-        transition-duration: 1s;
-        transition-timing-function: ease-out; 
-        cursor: pointer;
-    }
-    &:hover .to-product-page-cart-indicator {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-    }
-    .to-product-page-cart-indicator:hover {
-        background-color: #479f5e;
-    }
-    .product-image-container {
-        width: 100%;
-        height: 80%;
-        overflow: hidden;       
 
-        .product-image {
-            width: 100%;
-            object-fit: cover;
-            transition-duration: 1s;
-            transition-timing-function: ease-out;
-        }
-
-        .product-image:hover {
-            transform: scale(1.2);
-        }
-    }
-    .out-of-stock{
-        position: relative;
-        h3 {
-            position: absolute;
-            text-align: center;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) !important;
-            color:#8D8F9A;
-            font-size: 2rem;
-        }
-    }
-    
-    .product-title {
-        color: #8D8F9A;
-        font-weight: 300;
-        margin: 0.5rem 0;
-    }
-    .product-price {
-        color: #1D1F22;
-        font-weight: 500;
-    }
     &:hover {
         box-shadow: 0px 0px 10px 2px rgba(169, 165, 165, 0.2);
     }
     &:has(.out-of-stock) {
-        .product-image, .product-title, .product-price{
+        .product__image, .product__title, .product__price{
             opacity:0.3;
         }
     }
+
+    &__productLink {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
     
+    &__imageContainer {
+        height: 330px;
+        width: 100%;
+        overflow: hidden;       
+    }
+
+    &__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        // object-fit: contain;
+        object-position: 50% 50%;
+        transition-duration: 1s;
+        transition-timing-function: ease-out;
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+
+    &__titlePriceContainer {
+        color: var(--dark)
+    }
+    
+    &__title {
+        font-weight: var(--font-light);
+        font-size: var(--title-x-small);
+        line-height: 160%;
+    }
+    &__price {
+        font-weight: var(--font-semi-bold);
+    }
+    
+    &__addDefaultIndicator {
+        position: absolute;
+        top: calc(330px - calc(1rem / 2));
+        right: 30px;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        z-index: 100;
+        background-color: var(--light-green);
+        display:none;
+        color: var(--white);
+        transition: background-color 1s ease-out;
+        transition: transform 200ms ease-in-out;
+        cursor: pointer;
+        &:hover {
+            background-color: var(--dark-green);
+        }
+        &:active {
+            background-color: var(--dark-green);
+            transform: translate(0, 2px);
+        }
+    }
+    &:hover &__addDefaultIndicator {
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+    }
+
+    &__addDefaultIndicatorIcon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .out-of-stock{
+        position: relative;
+    }
+    .out-of-stock-txt {
+        position: absolute;
+        text-align: center;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) !important;
+        color: var(--gray);
+        font-weight: 400;
+        font-size: 24px;
+        text-transform: uppercase;
+    }
 }

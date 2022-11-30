@@ -6,30 +6,24 @@ import { Link } from "react-router-dom";
 import fetchItemsFromCache from "../../../utils/fetchItemsFromCache";
 import setItemsToCache from "../../../utils/setItemsToCache";
 import { ItemsConsumer } from "../../../context/itemsContext";
+import fetchCurrencyFromCache from "../../../utils/fetchCurrencyFromCache";
+import findPrice from "../../../utils/findPrice";
 
 class Product extends React.Component {
   constructor(props) {
     super(props);
 
-    const { product, productAvailable } = this.props;
+    const { product } = this.props;
     this.product = product;
-    this.productAvailable = productAvailable;
+    this.productAvailable = product.inStock;
 
-    this.lastSelectedCurrency =
-      JSON.parse(localStorage.getItem("currency")) || false;
-
-    this.fetchPrice = this.fetchPrice.bind(this);
+    this.lastSelectedCurrency = fetchCurrencyFromCache();
 
     // for saving def data
     this.saveProdWithDefAttrib = this.saveProdWithDefAttrib.bind(this);
   }
 
-  fetchPrice(lastSelectedCurrency, product) {
-    return product.prices.find(
-      (price) => price.currency.symbol === lastSelectedCurrency.symbol
-    );
-  }
-
+  // TODO: CHECK LATER IF FUNCTION CAN BE REFACTORED FURTHER
   saveProdWithDefAttrib(product) {
     const allCartItems = fetchItemsFromCache();
 
@@ -38,7 +32,6 @@ class Product extends React.Component {
       name: product.name,
       prices: product.prices,
       gallery: product.gallery,
-      // allAttributes: [...product.attributes],
       allAttributes: [],
       selectedAttributes: {},
       quantity: 0,
@@ -47,7 +40,7 @@ class Product extends React.Component {
     // add selected attributes
     for (let [order, attribute] of product.attributes.entries()) {
       // for (let attribute of product.attributes) {
-      // Note: there is an error while fetching products attributes (Nike's and Jacket's attributes are the same when fetched with GET_PRODUCTS when id is required).
+      // Note: there is an error while fetching products attributes (Nike's and Jacket's attributes are the same when fetched with GET_PRODUCTS when id is required. Probably cased by Attribute id match of both).
       cartProductData.allAttributes[order] = {
         // as name == id
         id: attribute.name,
@@ -93,67 +86,61 @@ class Product extends React.Component {
 
   render() {
     return (
-      <div className="product-container">
-        <Link to={this.product.id}>
+      <div className="product">
+        <Link className="product__productLink" to={this.product.id}>
           <div
-            className={`product-image-container ${
+            className={`product__imageContainer ${
               !this.productAvailable ? "out-of-stock" : ""
             }`}
           >
-            {!this.productAvailable && <h3>Out of stock</h3>}
+            {!this.productAvailable && (
+              <h3 className="out-of-stock-txt">Out of stock</h3>
+            )}
 
             <img
-              className="product-image"
+              className="product__image"
               src={this.product.gallery[0]}
               alt={this.product.name}
             />
           </div>
-          <div className="product-title-price-container">
-            <h2 className="product-title">
+          <div className="product__titlePriceContainer">
+            <h2 className="product__title">
               {this.product.brand} {this.product.name}
             </h2>
             <CurrencyConsumer>
               {(value) => {
                 const { currentCurrency } = value;
-                const symbol = this.fetchPrice(
+                const price = findPrice(
+                  this.product,
                   Object.keys(currentCurrency).length
                     ? currentCurrency
-                    : this.lastSelectedCurrency,
-                  this.product
-                ).currency.symbol;
-
-                const amount = this.fetchPrice(
-                  Object.keys(currentCurrency).length
-                    ? currentCurrency
-                    : this.lastSelectedCurrency,
-                  this.product
-                ).amount;
+                    : this.lastSelectedCurrency
+                );
 
                 return (
-                  <p className="product-price">
-                    {symbol}
-                    {amount}
-                  </p>
+                  <span className="product__price">
+                    {price.currency.symbol}
+                    {price.amount}
+                  </span>
                 );
               }}
             </CurrencyConsumer>
           </div>
         </Link>
         {this.productAvailable && (
-          // TODO: HERE
           <ItemsConsumer>
             {(value) => {
               // to set items on the global context
               const { setItems } = value;
               return (
                 <div
-                  className="to-product-page-cart-indicator"
+                  className="product__addDefaultIndicator"
                   onClick={() => {
                     this.saveProdWithDefAttrib(this.product);
                     setItems(fetchItemsFromCache());
                   }}
                 >
-                  <BsCart2 />
+                  <BsCart2 className="product__addDefaultIndicatorIcon" />
                 </div>
               );
             }}
