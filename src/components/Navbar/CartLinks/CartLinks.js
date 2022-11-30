@@ -6,9 +6,11 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import CurrencyDropdown from "../CurrencyDropdown/CurrencyDropdown";
 import CartDropdown from "./CartDropdown/CartDropdown";
 import { CurrencyConsumer } from "../../../context/currencyContext";
-import ItemsContext from "../../../context/itemsContext";
+import { ItemsConsumer } from "../../../context/itemsContext";
 import fetchItemsFromCache from "../../../utils/fetchItemsFromCache";
 import calcTotItems from "../../../utils/calculation/calcTotItems";
+import fetchCurrencyFromCache from "../../../utils/fetchCurrencyFromCache";
+import setCurrencyToCache from "../../../utils/setCurrencyToCache";
 
 class CartLinks extends React.Component {
   constructor(props) {
@@ -18,34 +20,17 @@ class CartLinks extends React.Component {
     const { currencies } = props;
     this.currencies = currencies;
 
-    // get last selected currency or set new one if non was selected earlier
-    const lastSelectedCurrency =
-      JSON.parse(localStorage.getItem("currency")) || false;
-
-    if (!lastSelectedCurrency) {
-      localStorage.setItem("currency", JSON.stringify(currencies[0]));
+    if (!fetchCurrencyFromCache().length) {
+      setCurrencyToCache(currencies[0]);
     }
 
-    // count total number of items selected
-    this.totalItems =
-      JSON.parse(localStorage.getItem("items"))?.reduce(
-        (acc, item) => acc + item.quantity,
-        0
-      ) || 0;
-
-    // TODO: CHECK WHY CARTDROPDOWN DISAPPEARS ON + OR - BUTTON CLICKS
-    // component state
     this.state = {
       currencyDropdownVisible: false,
       cartDropdownVisible: false,
-      selectedCurrency: lastSelectedCurrency || this.currencies[0],
     };
 
     // for displaying/hiding dropdown menus
     this.toggleDropdownVisibility = this.toggleDropdownVisibility.bind(this);
-
-    // for instantly reflecting currency change
-    this.updateSelectedCurrency = this.updateSelectedCurrency.bind(this);
   }
 
   toggleDropdownVisibility(menuName) {
@@ -60,74 +45,76 @@ class CartLinks extends React.Component {
     }
   }
 
-  updateSelectedCurrency(newCurrency) {
-    localStorage.setItem("currency", JSON.stringify(newCurrency));
-  }
-
   render() {
     return (
-      <div className="card-links-container">
+      <div className="cartlinks">
         {/* currency related */}
-        <div className="nav-currency-dropdown-container">
+        <div className="cartlinks__currencyContainer">
           <div
-            className="dropdown-arrow-container"
+            className="cartlinks__selectedCurrencyContainer"
             onClick={() => this.toggleDropdownVisibility("currency")}
           >
             <CurrencyConsumer>
               {(value) => {
                 const { currentCurrency } = value;
                 return (
-                  <span className="dropdown-currency-symbol">
-                    {/* update currency selected without refreshing*/}
+                  <span className="cartlinks__selectedCurrency">
+                    {/* update selected currency*/}
                     {Object.keys(currentCurrency).length
                       ? currentCurrency.symbol
-                      : this.state.selectedCurrency.symbol}
+                      : fetchCurrencyFromCache().symbol}
                   </span>
                 );
               }}
             </CurrencyConsumer>
 
-            {!this.state.currencyDropdownVisible && <FiChevronDown />}
-            {this.state.currencyDropdownVisible && <FiChevronUp />}
+            {!this.state.currencyDropdownVisible && (
+              <FiChevronDown className="chevron-icon" />
+            )}
+            {this.state.currencyDropdownVisible && (
+              <FiChevronUp className="chevron-icon" />
+            )}
           </div>
           {this.state.currencyDropdownVisible && (
-            <CurrencyDropdown
-              currencies={this.currencies}
-              updateSelectedCurrency={this.updateSelectedCurrency}
-            />
+            <CurrencyDropdown currencies={this.currencies} />
           )}
         </div>
         {/* cart related */}
-        <div className="nav-cart-overlay">
-          <div
-            className="nav-cart-icon-container"
-            onClick={() => this.toggleDropdownVisibility("cart")}
-          >
-            <BsCart2 className="nav-cart-icon" />
-            <ItemsContext>
-              {(value) => {
-                const { selectedItems } = value;
+        <div
+          className="cartlinks__cartIconContainer"
+          onClick={() => this.toggleDropdownVisibility("cart")}
+        >
+          <BsCart2 className="cartlinks__cartIcon" />
 
-                // assign all selected cart items
-                const allCartItems = selectedItems.length
-                  ? selectedItems
-                  : fetchItemsFromCache();
-                const totalNumberOfItems = calcTotItems(allCartItems);
-                return (
-                  totalNumberOfItems > 0 && (
-                    <div
-                      className="cart-item-quantity-notifier"
-                      onClick={() => this.toggleDropdownVisibility("cart")}
-                    >
+          <ItemsConsumer>
+            {(value) => {
+              const { selectedItems } = value;
+
+              // assign all selected cart items
+              const allCartItems = selectedItems.length
+                ? selectedItems
+                : fetchItemsFromCache();
+              const totalNumberOfItems = calcTotItems(allCartItems);
+              return (
+                totalNumberOfItems > 0 && (
+                  <div
+                    className="cartlinks__itemQuantityNotifier"
+                    onClick={() => this.toggleDropdownVisibility("cart")}
+                  >
+                    <span className="cartlinks__itemQuantity">
                       {totalNumberOfItems}
-                    </div>
-                  )
-                );
-              }}
-            </ItemsContext>
-          </div>
-          {this.state.cartDropdownVisible && <CartDropdown />}
+                    </span>
+                  </div>
+                )
+              );
+            }}
+          </ItemsConsumer>
         </div>
+        {this.state.cartDropdownVisible && (
+          <CartDropdown
+            toggleDropdownVisibility={this.toggleDropdownVisibility}
+          />
+        )}
       </div>
     );
   }

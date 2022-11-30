@@ -1,0 +1,19 @@
+.App {
+  width: 100%;
+}
+
+.maxWidthLimiter {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.btn--outline {
+  background: transparent;
+  border: 1px solid #000;
+  color: var(--dark);
+}
+.btn--green {
+  background: var(--light-green);
+  border: none;
+  color: var(--white)
+}

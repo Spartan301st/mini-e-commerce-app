@@ -1,22 +1,29 @@
-.currencies-dropdown-container {
+.currencyDropdown {
     position: absolute;
     display: flex;
     flex-direction: column;
     z-index: 100;
-    width: 100px;
-    top: 4rem;
-    // right: 1rem;
-    box-shadow: 0px 0px 10px 2px rgba(169, 165, 165, 0.2);
-    div {
+    width: 114px;
+    top: calc(80px - 10px);
+    right: -10px;
+    filter: drop-shadow(0px 4px 35px rgba(168, 172, 176, 0.19));
+    &__currencyOption {
         display: inline-block;
-        padding: 1rem;
-        background-color: white;
-    }
-    div:hover {
-        background-color: #EEEEEE;
-    }
-    .currency-option {
+        padding: 8px 20px;
+        background-color: var(--white);
+        font-weight: var(--font-semi-bold);
+        font-size: var(--text-large-medium);
+        line-height: 160%;
         cursor: pointer;
+        &:hover {
+            background-color: var(--light-gray);
+        }
+        &:first-of-type {
+            padding: 20px 20px 13px;
+        }
+        &:last-of-type {
+            padding: 13px 20px 20px;
+        }
     }
         
 }

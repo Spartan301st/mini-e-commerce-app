@@ -1,19 +1,22 @@
-.navbar {
-  &__navlinksContainer {
+.navlinks {
     display: flex;
     justify-content: space-evenly;
-    .navlink {
+    align-items: center;
+    height: 100%;
+    &__navlink {
       text-decoration: none;
       text-transform: uppercase;
-      font-weight: 500;
-      color: #1D1F22;
-      padding: 1.3rem;
-    }
-    .active-link {
-      color: #5ECE7B;
-      border-bottom: 2px solid #5ECE7B
+      font-weight: var(--font-semi-bold);
+      color: var(--dark);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
     }
   }
+
+.active-link {
+  color: var(--light-green);
+  border-bottom: 2px solid var(--light-green)
 }
-// .navbar
 

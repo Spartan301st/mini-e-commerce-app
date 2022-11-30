@@ -7,7 +7,7 @@ import "./NavLinks.scss";
 class NavLinks extends React.Component {
   render() {
     return (
-      <nav className="navbar__navlinksContainer">
+      <nav className="navlinks">
         {/* fetched categories */}
         <Query query={GET_CATEGORIES}>
           {({ loading, data }) => {
@@ -18,7 +18,7 @@ class NavLinks extends React.Component {
                 <NavLink
                   key={i}
                   className={({ isActive }) =>
-                    `navlink${isActive ? " active-link" : ""}`
+                    `navlinks__navlink${isActive ? " active-link" : ""}`
                   }
                   to={category.name}
                 >

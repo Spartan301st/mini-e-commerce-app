@@ -5,7 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import React from "react";
-import "./App.css";
+import "./App.scss";
 
 import Navbar from "./components/Navbar/Navbar";
 import Products from "./components/Products/Products";

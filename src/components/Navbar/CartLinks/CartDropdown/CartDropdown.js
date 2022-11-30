@@ -8,13 +8,16 @@ import calcTotItems from "../../../../utils/calculation/calcTotItems";
 import { CurrencyConsumer } from "../../../../context/currencyContext";
 import fetchCurrencyFromCache from "../../../../utils/fetchCurrencyFromCache";
 import calcTotAmount from "../../../../utils/calculation/calcTotAmount";
-
-// note that CartDropdown extends Cart, therefore we have access to its props, that are used below
 class CartDropdown extends React.Component {
+  constructor(props) {
+    super(props);
+    const { toggleDropdownVisibility } = props;
+    this.toggleDropdownVisibility = toggleDropdownVisibility;
+  }
   render() {
     return (
       <>
-        <div className="cart-dropdown-container">
+        <div className="cartDropdown">
           <ItemsConsumer>
             {(value) => {
               const { setItems, selectedItems } = value;
@@ -27,10 +30,10 @@ class CartDropdown extends React.Component {
               const totalNumberOfItems = calcTotItems(allCartItems);
 
               return allCartItems.length ? (
-                <div className="cart-dropdown-info-container">
-                  <h2 className="my-bag">
+                <>
+                  <h2 className="cartDropdown__myBagHeader">
                     My bag,{" "}
-                    <span className="my-bag-quantity">
+                    <span className="cartDropdown__myBagQuantity">
                       {totalNumberOfItems} item
                       {totalNumberOfItems === 1 ? "" : "s"}
                     </span>
@@ -49,22 +52,26 @@ class CartDropdown extends React.Component {
                       );
                       return (
                         <>
-                          {allCartItems.map((cartItem, i) => (
-                            <CartItem
-                              key={i}
-                              cartItem={cartItem}
-                              cartItemID={`${i}-${cartItem.name.replaceAll(
-                                " ",
-                                "-"
-                              )}`}
-                              setItems={setItems}
-                              selectedItems={allCartItems}
-                              selectedCurrency={selectedCurrency}
-                            />
-                          ))}
-                          <div className="total-price">
-                            <span>Total</span>
-                            <span>
+                          <div className="cartDropdown__cartItemsContainer">
+                            {allCartItems.map((cartItem, i) => (
+                              <CartItem
+                                key={i}
+                                cartItem={cartItem}
+                                cartItemID={`${i}-${cartItem.name.replaceAll(
+                                  " ",
+                                  "-"
+                                )}`}
+                                setItems={setItems}
+                                selectedItems={allCartItems}
+                                selectedCurrency={selectedCurrency}
+                              />
+                            ))}
+                          </div>
+                          <div className="cartDropdown__totalPrice">
+                            <span className="cartDropdown__totalTxt">
+                              Total
+                            </span>
+                            <span className="cartDropdown__totalAmount">
                               {selectedCurrency.symbol}
                               {totalAmount}
                             </span>
@@ -73,25 +80,31 @@ class CartDropdown extends React.Component {
                       );
                     }}
                   </CurrencyConsumer>
-                  <div className="action-buttons">
-                    <NavLink className="btn view-btn" to="/cart">
+                  <div className="cartDropdown__actions">
+                    <NavLink
+                      className="cartDropdown__btn btn--outline"
+                      to="/cart"
+                    >
                       View Bag
                     </NavLink>
                     <button
-                      className="btn checkout-btn"
+                      className="cartDropdown__btn btn--green"
                       onClick={() => alert("Purchased successfully")}
                     >
                       Check Out
                     </button>
                   </div>
-                </div>
+                </>
               ) : (
-                <h2 className="empty-cart-indicator-header">Cart is empty</h2>
+                <h2 className="cartDropdown__emptyCartHeader">Cart is empty</h2>
               );
             }}
           </ItemsConsumer>
         </div>
-        <div className="blur-out-background"></div>
+        <div
+          className="blur-out-background"
+          onClick={() => this.toggleDropdownVisibility("cart")}
+        ></div>
       </>
     );
   }

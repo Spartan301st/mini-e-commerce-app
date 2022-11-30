@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&family=Roboto+Condensed&display=swap");
+
+/* font-family: 'Raleway', sans-serif;
+font-family: 'Roboto Condensed', sans-serif; */
+
+:root {
+  /* texts */
+  --text-small-medium: 0.875rem;
+  --text-medium: 1rem;
+  --text-large-medium: 1.125rem;
+  /* titles */
+  --title-large: 2.625rem;
+  --title-medium: 2rem;
+  --title-small: 1.875rem;
+  --title-x-small: 1.125rem;
+  // font weights
+  --font-light: 300;
+  --font-standard: 400;
+  --font-semi-bold: 500;
+  --font-bold: 600;
+  --font-x-bold: 700;
+  // colors
+  --white: #FFFFFF;
+  --light-green: #5ECE7B;
+  --dark: #1D1F22;
+  --light-gray: #EEEEEE;
+
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Raleway", sans-serif;
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+a {
+  text-decoration: none;
+}

@@ -1,41 +1,53 @@
-.card-links-container {
+.cartlinks {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 22px;
     height: 100%;
+    position: relative;  
     
-    .nav-currency-dropdown-container {
+    &__currencyContainer {
       display: flex;
-      margin-right: 5px;
-      position: relative;
-      .dropdown-arrow-container {
-        display: flex;
-        align-items: flex-end;
-        cursor: pointer;
-        margin-right: 1rem;
-        .dropdown-currency-symbol {
-          margin-right: 5px;
-        }
-      }
     }
-    .nav-cart-overlay{
-      position: relative;
-    .nav-cart-icon-container {
-      width: 20px;
+    &__selectedCurrencyContainer {
+      display: flex;
+      align-items: flex-end;
       cursor: pointer;
-      .cart-item-quantity-notifier {
-        position: absolute;
-        right: 0;
-        top: 0;
-        border-radius: 50%;
-        background-color: #1D1F22;
-        color: #EEEEEE;
-        width: 12px;
-        height: 12px;
-        font-size: 8px;
-        display: flex;
-        justify-content:center;
-        align-items:center;
-      }
     }
-  }
-  }
+    &__selectedCurrency {
+      padding: 0px 10px;
+      font-size: var(--text-large-medium);
+      font-weight: var(--font-semi-bold);
+    }
+    
+    &__cartIconContainer {
+      width: auto;
+      position: relative;
+      cursor: pointer;
+    }
+    &__cartIcon {
+      width: 20px;
+      height: 20px;
+    }
+    &__itemQuantityNotifier {
+      position: absolute;
+      right: -10px;
+      top: -7px;
+      border-radius: 50%;
+      background-color: var(--dark);
+      color: var(--white);
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content:center;
+      align-items:center;
+    }
+    &__itemQuantity {
+      font-weight: var(--font-x-bold);
+      font-size: var(--text-small-medium);
+    }
+}
+
+.chevron-icon {
+  font-size: 14px;
+}

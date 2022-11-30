@@ -1,24 +1,25 @@
 import React from "react";
 import { CurrencyConsumer } from "../../../context/currencyContext";
+import setCurrencyToCache from "../../../utils/setCurrencyToCache";
 import "./CurrencyDropdown.scss";
 
 class CurrencyDropdown extends React.Component {
   render() {
-    const { currencies, updateSelectedCurrency } = this.props;
+    const { currencies } = this.props;
     return (
       <CurrencyConsumer>
         {(value) => {
           // for setting a currency on the global context
           const { setCurrentCurrency } = value;
           return (
-            <div className="currencies-dropdown-container">
+            <div className="currencyDropdown">
               {currencies.map((currency) => (
                 <div
                   key={currency.label}
-                  className="currency-option"
+                  className="currencyDropdown__currencyOption"
                   onClick={() => {
+                    setCurrencyToCache(currency);
                     setCurrentCurrency(currency);
-                    updateSelectedCurrency(currency);
                   }}
                 >
                   {currency.symbol} {currency.label}

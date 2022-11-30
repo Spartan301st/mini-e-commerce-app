@@ -1,23 +1,35 @@
-.cart-dropdown-container {
+.cartDropdown {
     overflow-y: scroll;
     overflow-x: hidden;
     position: absolute;
+    top: 80px;
+    right: -10px;
     z-index: 100;
-    width: 300px;
-    height: 70vh;
-    top: 2.5rem;
-    right: 3rem;
-    background-color: white;
-    padding: 1rem 0.5rem;
-    box-shadow: 0px 0px 10px 2px rgba(169, 165, 165, 0.2);
-    .my-bag {
-        font-size: 1rem;
-        margin-bottom: 2rem;
-        .my-bag-quantity {
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
+    width: 325px;
+    height: 60vh;
+    background-color: var(--white);
+    padding: 32px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    &__myBagHeader {
+        font-size: var(--text-large-medium);
+        line-height: 160%;
     }
+
+    &__myBagQuantity {
+        font-weight: var(--font-bold);
+        font-size: var(--text-medium);
+    }
+
+    // &__cartItemsContainer {
+    //     //
+    // }
+
+    
+    // TODO: MOVE TO CART ITEMS WHERE @MEDIA IS FOR MOBILES
+    /* FROM HERE */
     .cart-item-details-container {
         border: none;
         width: 100%;
@@ -142,43 +154,38 @@
             }
         }
     }
+    /* TILL HERE */
 
-    .total-price {
+    &__totalPrice {
         display: flex;
         justify-content: space-between;
-        span {
-            font-size:1rem;
-            font-weight: 700;
-        }
+    }
+    &__totalTxt {
+        font-weight: var(--font-semi-bold);
     }
 
-    .action-buttons {
-        margin-top: 1rem;
-        display: flex;
-        justify-content: space-between;
-        .btn {
-            text-transform: uppercase;
-            text-align: center;
-            padding: 0.7rem 1rem;
-            width: 45%;
-            font-family: 'Raleway', sans-serif;
-            font-weight: 500;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-        .view-btn {
-            background-color: transparent;
-            border: 1px solid black;
-            text-decoration: none;
-            color: #1D1F22;
-        }
-        .checkout-btn {
-            border: none;
-            background-color: #5ECE7B;
-            color: white;
-        }
+    &__totalAmount {
+        font-weight: var(--font-x-bold);
     }
-    .empty-cart-indicator-header {
+
+    &__actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        width: 100%;
+        height: 43px;
+    }
+    &__btn {
+        display: inline-block;
+        cursor: pointer;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 12px 0;
+        font-family: 'Raleway', sans-serif;
+        font-weight: var(--font-bold);
+        font-size: var(--text-small-medium);
+    }
+    &__emptyCartHeader {
         text-align: center;
     }
 }
@@ -189,6 +196,7 @@
     height: 100vh;
     position: fixed;
     left: 0;
-    top: 4rem;
+    top: 80px;
     z-index: 50;
+    cursor: pointer;
 }
