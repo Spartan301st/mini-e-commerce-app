@@ -22,6 +22,7 @@ const GET_SINGLE_PRODUCT = gql`
           symbol
         }
       }
+      inStock
       brand
     }
   }

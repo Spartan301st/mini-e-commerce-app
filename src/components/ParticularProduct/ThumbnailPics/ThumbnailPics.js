@@ -6,10 +6,10 @@ class ThumbnailPics extends React.Component {
     const { imageURL, name, changeMainImage } = this.props;
     return (
       <div
-        className="thumbnail-img-container"
+        className="thumbnail"
         onClick={() => changeMainImage(imageURL)}
       >
-        <img className="thumbnail-img" src={imageURL} alt={name} />
+        <img className="thumbnail__img" src={imageURL} alt={name} />
       </div>
     );
   }

@@ -1,13 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&family=Roboto+Condensed&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@100;300;400;500;700&display=swap');
 
-/* font-family: 'Raleway', sans-serif;
-font-family: 'Roboto Condensed', sans-serif; */
+// font-family: 'Raleway', sans-serif;
+// font-family: 'Roboto', sans-serif;
+// font-family: 'Roboto Condensed', sans-serif;
 
 :root {
   /* texts */
   --text-small-medium: 0.875rem;
   --text-medium: 1rem;
   --text-large-medium: 1.125rem;
+  --text-large: 1.5rem;
   /* titles */
   --title-large: 2.625rem;
   --title-medium: 2rem;
@@ -21,6 +23,7 @@ font-family: 'Roboto Condensed', sans-serif; */
   --font-x-bold: 700;
   // colors
   --white: #FFFFFF;
+  --disabled-green: rgba(94, 206, 123, 0.5);
   --light-green: #5ECE7B;
   --dark-green: #479f5e;
   --dark: #1D1F22;

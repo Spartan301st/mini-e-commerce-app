@@ -5,17 +5,24 @@ import { ItemsConsumer } from "../../../context/itemsContext";
 import { CurrencyConsumer } from "../../../context/currencyContext";
 import fetchCurrencyFromCache from "../../../utils/fetchCurrencyFromCache";
 import findPrice from "../../../utils/findPrice";
+import ProductAttribute from "./ProductAttribute/ProductAttribute";
 
 import { Markup } from "interweave";
+import setItemsToCache from "../../../utils/setItemsToCache";
 
 class ProductDetails extends React.Component {
   constructor(props) {
     super(props);
+    const { product } = this.props;
+    console.log(product);
+    this.product = product;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // TODO: CHECK IF IT CAN BE REFACTORED LATER
   handleSubmit(event, product) {
     event.preventDefault();
+    if (!product.inStock) return;
 
     // all saved items from cache
     const allCartItems = fetchItemsFromCache();
@@ -32,7 +39,6 @@ class ProductDetails extends React.Component {
       selectedAttributes: {},
       quantity: 0,
     };
-    console.log(cartProductData.gallery);
 
     // add newly selected attributes to the final data to be saved
     for (let [key, value] of formData.entries()) {
@@ -42,7 +48,7 @@ class ProductDetails extends React.Component {
     // if no cart items at all (no item was added to cart yet)
     if (!allCartItems.length) {
       cartProductData.quantity = 1;
-      localStorage.setItem("items", JSON.stringify([cartProductData]));
+      setItemsToCache([cartProductData]);
     }
     // if there is an item with the same name and the same selected attribute values
     else if (
@@ -64,25 +70,21 @@ class ProductDetails extends React.Component {
         }
         return item;
       });
-      localStorage.setItem("items", JSON.stringify(modifiedQuantityItem));
+      setItemsToCache(modifiedQuantityItem);
     }
     // if there was at least one item added to the cart and item with the new attribute values is added
     else {
       cartProductData.quantity = 1;
-      localStorage.setItem(
-        "items",
-        JSON.stringify([...allCartItems, cartProductData])
-      );
+      setItemsToCache([...allCartItems, cartProductData]);
     }
   }
 
   render() {
-    const { product } = this.props;
     return (
-      <div className="product-details-container">
-        <div className="brand-naming-container">
-          <h2>{product.brand}</h2>
-          <h3>{product.name}</h3>
+      <div className="productDetails">
+        <div className="productDetails__brandNameContainer">
+          <h2 className="productDetails__brandName">{this.product.brand}</h2>
+          <h3 className="productDetails__productName">{this.product.name}</h3>
         </div>
         <ItemsConsumer>
           {(value) => {
@@ -91,70 +93,21 @@ class ProductDetails extends React.Component {
             // form to be able to submit all the selections
             return (
               <form
-                className="attributes-container"
+                className="productDetails__attributesForm"
                 onSubmit={(e) => {
-                  this.handleSubmit(e, product);
+                  this.handleSubmit(e, this.product);
                   // Note: we are refetching the entire cache to save it in the global context for selected items
                   setItems(fetchItemsFromCache());
                 }}
               >
-                {product.attributes.map((attribute) => (
-                  <div className="attribute-container" key={attribute.id}>
-                    <h4 className="details-header">{attribute.name}:</h4>
-                    <div className="attribute-values">
-                      {attribute.items.map((item) => {
-                        if (attribute.type === "text") {
-                          return (
-                            <div
-                              className="text-attribute-container"
-                              key={item.displayValue}
-                            >
-                              <input
-                                id={`${attribute.id}-${item.value}`}
-                                type="radio"
-                                value={item.value}
-                                className="text-attribute-input"
-                                name={attribute.id}
-                                required
-                              />
-                              <label
-                                className="text-attribute-label"
-                                htmlFor={`${attribute.id}-${item.value}`}
-                              >
-                                {item.value}
-                              </label>
-                            </div>
-                          );
-                          // in case there is an additional type other than text and swatch
-                          // } else if (attribute.type === "swatch") {
-                        } else {
-                          return (
-                            <div
-                              className="swatch-attribute-container"
-                              key={item.displayValue}
-                            >
-                              <input
-                                id={`${attribute.id}-${item.value}`}
-                                type="radio"
-                                value={item.value}
-                                className="swatch-attribute-input"
-                                name={attribute.id}
-                                required
-                              />
-                              <label
-                                className="swatch-attribute-label"
-                                htmlFor={`${attribute.id}-${item.value}`}
-                                style={{ backgroundColor: item.value }}
-                              ></label>
-                            </div>
-                          );
-                        }
-                      })}
-                    </div>
-                  </div>
+                {this.product.attributes.map((attribute) => (
+                  <ProductAttribute
+                    componentName="productDetails"
+                    attribute={attribute}
+                  />
                 ))}
-                <div className="particular-product-price-container">
-                  <h4 className="details-header">Price:</h4>
+                <div className="productDetails__priceContainer">
+                  <h4 className="productDetails__priceHeader">Price:</h4>
                   <CurrencyConsumer>
                     {(value) => {
                       const { currentCurrency } = value;
@@ -162,25 +115,31 @@ class ProductDetails extends React.Component {
                         .length
                         ? currentCurrency
                         : fetchCurrencyFromCache();
-                      const price = findPrice(product, selectedCurrency);
+                      const price = findPrice(this.product, selectedCurrency);
                       return (
-                        <p className="particular-product-price">
+                        <span className="productDetails__price">
                           {price.currency.symbol}
                           {price.amount}
-                        </p>
+                        </span>
                       );
                     }}
                   </CurrencyConsumer>
                 </div>
-                {/* TODO: DISABLE BTN INITIALLY AND ENABLE ONLY WHEN ALL THE INPUTS ARE CHECKED */}
-                <button type="submit" className="btn add-to-cart-btn">
+                <button
+                  type="submit"
+                  className="btn--green productDetails__submitBtn"
+                  disabled={!this.product.inStock}
+                >
                   Add to cart
                 </button>
               </form>
             );
           }}
         </ItemsConsumer>
-        <Markup content={product.description} />
+        <Markup
+          className="productDetails__descriptions"
+          content={this.product.description}
+        />
       </div>
     );
   }

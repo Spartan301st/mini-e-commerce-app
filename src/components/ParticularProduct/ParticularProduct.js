@@ -9,6 +9,8 @@ import fetchCurrentPath from "../../utils/fetchCurrentPath";
 class ParticularProduct extends React.Component {
   constructor(props) {
     super(props);
+
+    this.pathName = fetchCurrentPath(2);
     this.state = {
       mainImageURL: "",
     };
@@ -20,17 +22,19 @@ class ParticularProduct extends React.Component {
   }
 
   render() {
-    const pathName = fetchCurrentPath(2);
     return (
-      <div className="single-product-container">
-        <Query query={GET_SINGLE_PRODUCT} variables={{ productID: pathName }}>
+      <main className="singleProduct maxWidthLimiter">
+        <Query
+          query={GET_SINGLE_PRODUCT}
+          variables={{ productID: this.pathName }}
+        >
           {({ loading, data }) => {
             if (data) {
               const { product } = data;
               if (product) {
                 return (
                   <>
-                    <div className="product-thubnail-pictures">
+                    <div className="singleProduct__thumbnails">
                       {product.gallery.map((imageURL, i) => {
                         return (
                           <ThumbnailPics
@@ -42,13 +46,15 @@ class ParticularProduct extends React.Component {
                         );
                       })}
                     </div>
-                    <div className="product-main-picture">
+
+                    <div className="singleProduct__mainImgContainer">
                       <img
-                        className="main-img"
+                        className="singleProduct__mainImg"
                         src={this.state.mainImageURL || product.gallery[0]}
                         alt="main"
                       />
                     </div>
+
                     <ProductDetails product={product} />
                   </>
                 );
@@ -56,7 +62,7 @@ class ParticularProduct extends React.Component {
             }
           }}
         </Query>
-      </div>
+      </main>
     );
   }
 }

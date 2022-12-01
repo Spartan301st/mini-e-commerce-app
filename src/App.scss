@@ -9,11 +9,13 @@
 
 .btn--outline {
   background: transparent;
-  border: 1px solid #000;
+  border: 1px solid var(--dark);
   color: var(--dark);
+  cursor: pointer;
 }
 .btn--green {
   background: var(--light-green);
   border: none;
-  color: var(--white)
+  color: var(--white);
+  cursor: pointer;
 }

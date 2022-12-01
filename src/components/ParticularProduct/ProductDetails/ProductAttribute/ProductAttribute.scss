@@ -1,0 +1,57 @@
+// add other component names here as well
+.productDetails {
+    &__attribute {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    &__attributeName, &__priceHeader {
+        font-family: 'Roboto Condensed', sans-serif;
+        text-transform: uppercase;
+        font-weight: var(--font-x-bold);
+        font-size: var(--title-x-small);
+    }
+    
+    &__attributeValues {
+        display: flex;
+        gap: 10px;
+    }  
+    // &__textAttributeContainer {
+    // }
+    &__textAttributeInput, &__swatchAttributeInput {
+        opacity: 0;
+        position: fixed;
+        width: 0;
+    }
+    &__textAttributeInput {
+        &:checked + .productDetails__textAttributeLabel {
+            color: var(--white);
+            background-color: var(--dark);
+        }
+    }
+    &__textAttributeLabel {
+        cursor: pointer;
+        border: 2px solid var(--dark);
+        height: 45px;
+        width: 63px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    // &__swatchAttributeContainer {
+    // }     
+    &__swatchAttributeInput {
+        &:checked + .productDetails__swatchAttributeLabel {
+            border: 2px solid var(--light-green);
+        }
+    }
+    &__swatchAttributeLabel {
+        cursor: pointer;
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--dark);
+        display: inline-block;
+    } 
+}
