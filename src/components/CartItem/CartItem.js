@@ -1,10 +1,10 @@
 import React from "react";
-import findPrice from "../../utils/findPrice";
+import findPrice from "../../utils/misc/findPrice";
 import "./CartItem.scss";
-import switchImage from "../../utils/switchImage";
+import switchImage from "../../utils/misc/switchImage";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { BiMinus, BiPlus } from "react-icons/bi";
-import incrementDecrementQuantity from "../../utils/incrementDecrementQuantity";
+import incrementDecrementQuantity from "../../utils/set/incrementDecrementQuantity";
 import CartItemAttribute from "./CartItemAttribute/CartItemAttribute";
 
 class CartItem extends React.Component {

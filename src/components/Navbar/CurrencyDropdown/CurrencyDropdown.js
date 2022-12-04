@@ -1,6 +1,6 @@
 import React from "react";
 import { CurrencyConsumer } from "../../../context/currencyContext";
-import setCurrencyToCache from "../../../utils/setCurrencyToCache";
+import setCurrencyToCache from "../../../utils/set/setCurrencyToCache";
 import "./CurrencyDropdown.scss";
 
 class CurrencyDropdown extends React.Component {

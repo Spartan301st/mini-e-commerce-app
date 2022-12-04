@@ -4,8 +4,8 @@ import { ItemsConsumer } from "../../context/itemsContext";
 import calcTaxAmount from "../../utils/calculation/calcTaxAmount";
 import calcTotAmount from "../../utils/calculation/calcTotAmount";
 import calcTotItems from "../../utils/calculation/calcTotItems";
-import fetchCurrencyFromCache from "../../utils/fetchCurrencyFromCache";
-import fetchItemsFromCache from "../../utils/fetchItemsFromCache";
+import fetchCurrencyFromCache from "../../utils/fetch/fetchCurrencyFromCache";
+import fetchItemsFromCache from "../../utils/fetch/fetchItemsFromCache";
 import "./Cart.scss";
 
 import CartItem from "../CartItem/CartItem";

@@ -7,10 +7,10 @@ import CurrencyDropdown from "../CurrencyDropdown/CurrencyDropdown";
 import CartDropdown from "./CartDropdown/CartDropdown";
 import { CurrencyConsumer } from "../../../context/currencyContext";
 import { ItemsConsumer } from "../../../context/itemsContext";
-import fetchItemsFromCache from "../../../utils/fetchItemsFromCache";
+import fetchItemsFromCache from "../../../utils/fetch/fetchItemsFromCache";
 import calcTotItems from "../../../utils/calculation/calcTotItems";
-import fetchCurrencyFromCache from "../../../utils/fetchCurrencyFromCache";
-import setCurrencyToCache from "../../../utils/setCurrencyToCache";
+import fetchCurrencyFromCache from "../../../utils/fetch/fetchCurrencyFromCache";
+import setCurrencyToCache from "../../../utils/set/setCurrencyToCache";
 
 class CartLinks extends React.Component {
   constructor(props) {

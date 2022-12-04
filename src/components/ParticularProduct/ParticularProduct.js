@@ -4,7 +4,7 @@ import { Query } from "@apollo/client/react/components";
 import GET_SINGLE_PRODUCT from "../../queries/getSingleProduct";
 import ThumbnailPics from "./ThumbnailPics/ThumbnailPics";
 import ProductDetails from "./ProductDetails/ProductDetails";
-import fetchCurrentPath from "../../utils/fetchCurrentPath";
+import fetchCurrentPath from "../../utils/fetch/fetchCurrentPath";
 
 class ParticularProduct extends React.Component {
   constructor(props) {

@@ -3,10 +3,10 @@ import "./CartDropdown.scss";
 import { NavLink } from "react-router-dom";
 import CartItem from "../../../CartItem/CartItem";
 import { ItemsConsumer } from "../../../../context/itemsContext";
-import fetchItemsFromCache from "../../../../utils/fetchItemsFromCache";
+import fetchItemsFromCache from "../../../../utils/fetch/fetchItemsFromCache";
 import calcTotItems from "../../../../utils/calculation/calcTotItems";
 import { CurrencyConsumer } from "../../../../context/currencyContext";
-import fetchCurrencyFromCache from "../../../../utils/fetchCurrencyFromCache";
+import fetchCurrencyFromCache from "../../../../utils/fetch/fetchCurrencyFromCache";
 import calcTotAmount from "../../../../utils/calculation/calcTotAmount";
 class CartDropdown extends React.Component {
   constructor(props) {

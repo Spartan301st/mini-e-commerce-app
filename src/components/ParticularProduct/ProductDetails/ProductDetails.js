@@ -1,14 +1,14 @@
 import React from "react";
 import "./ProductDetails.scss";
-import fetchItemsFromCache from "../../../utils/fetchItemsFromCache";
+import fetchItemsFromCache from "../../../utils/fetch/fetchItemsFromCache";
 import { ItemsConsumer } from "../../../context/itemsContext";
 import { CurrencyConsumer } from "../../../context/currencyContext";
-import fetchCurrencyFromCache from "../../../utils/fetchCurrencyFromCache";
-import findPrice from "../../../utils/findPrice";
+import fetchCurrencyFromCache from "../../../utils/fetch/fetchCurrencyFromCache";
+import findPrice from "../../../utils/misc/findPrice";
 import ProductAttribute from "./ProductAttribute/ProductAttribute";
 
 import { Markup } from "interweave";
-import setItemsToCache from "../../../utils/setItemsToCache";
+import setItemsToCache from "../../../utils/set/setItemsToCache";
 
 class ProductDetails extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class ProductDetails extends React.Component {
     this.product = product;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  
+
   handleSubmit(event, product) {
     event.preventDefault();
     if (!product.inStock) return;

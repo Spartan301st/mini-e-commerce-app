@@ -3,11 +3,11 @@ import "./Product.scss";
 import { BsCart2 } from "react-icons/bs";
 import { CurrencyConsumer } from "../../../context/currencyContext";
 import { Link } from "react-router-dom";
-import fetchItemsFromCache from "../../../utils/fetchItemsFromCache";
-import setItemsToCache from "../../../utils/setItemsToCache";
+import fetchItemsFromCache from "../../../utils/fetch/fetchItemsFromCache";
+import setItemsToCache from "../../../utils/set/setItemsToCache";
 import { ItemsConsumer } from "../../../context/itemsContext";
-import fetchCurrencyFromCache from "../../../utils/fetchCurrencyFromCache";
-import findPrice from "../../../utils/findPrice";
+import fetchCurrencyFromCache from "../../../utils/fetch/fetchCurrencyFromCache";
+import findPrice from "../../../utils/misc/findPrice";
 
 class Product extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Product extends React.Component {
     // for saving def data
     this.saveProdWithDefAttrib = this.saveProdWithDefAttrib.bind(this);
   }
-  
+
   saveProdWithDefAttrib(product) {
     const allCartItems = fetchItemsFromCache();
 

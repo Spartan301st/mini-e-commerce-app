@@ -3,7 +3,7 @@ import "./Products.scss";
 import { Query } from "@apollo/client/react/components";
 import GET_PRODUCTS from "../../queries/getProducts";
 import Product from "./Product/Product";
-import fetchPathname from "../../utils/fetchCurrentPath";
+import fetchPathname from "../../utils/fetch/fetchCurrentPath";
 
 class Products extends React.Component {
   render() {
