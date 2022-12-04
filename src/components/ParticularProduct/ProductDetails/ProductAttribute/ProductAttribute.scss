@@ -1,4 +1,3 @@
-// add other component names here as well
 .productDetails {
     &__attribute {
         display: flex;
@@ -17,8 +16,6 @@
         display: flex;
         gap: 10px;
     }  
-    // &__textAttributeContainer {
-    // }
     &__textAttributeInput, &__swatchAttributeInput {
         opacity: 0;
         position: fixed;
@@ -38,10 +35,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    // &__swatchAttributeContainer {
-    // }     
+    }  
     &__swatchAttributeInput {
         &:checked + .productDetails__swatchAttributeLabel {
             border: 2px solid var(--light-green);

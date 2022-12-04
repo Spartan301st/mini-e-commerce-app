@@ -18,8 +18,7 @@ class ProductDetails extends React.Component {
     this.product = product;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  // TODO: CHECK IF IT CAN BE REFACTORED LATER
+  
   handleSubmit(event, product) {
     event.preventDefault();
     if (!product.inStock) return;

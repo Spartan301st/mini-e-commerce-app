@@ -17,7 +17,6 @@ class Navbar extends React.Component {
           <Query query={GET_CURRENCIES}>
             {({ loading, data }) => {
               if (data) {
-                console.log("fetched data");
                 const { currencies } = data;
                 return <CartLinks currencies={currencies} />;
               }

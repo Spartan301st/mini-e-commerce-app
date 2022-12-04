@@ -1,7 +1,7 @@
 import React from "react";
 import "./CartDropdown.scss";
 import { NavLink } from "react-router-dom";
-import CartItem from "../../../Cart/CartItem/CartItem";
+import CartItem from "../../../CartItem/CartItem";
 import { ItemsConsumer } from "../../../../context/itemsContext";
 import fetchItemsFromCache from "../../../../utils/fetchItemsFromCache";
 import calcTotItems from "../../../../utils/calculation/calcTotItems";
@@ -64,6 +64,7 @@ class CartDropdown extends React.Component {
                                 setItems={setItems}
                                 selectedItems={allCartItems}
                                 selectedCurrency={selectedCurrency}
+                                componentName="cartDropdown"
                               />
                             ))}
                           </div>

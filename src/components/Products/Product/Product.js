@@ -22,8 +22,7 @@ class Product extends React.Component {
     // for saving def data
     this.saveProdWithDefAttrib = this.saveProdWithDefAttrib.bind(this);
   }
-
-  // TODO: CHECK LATER IF FUNCTION CAN BE REFACTORED FURTHER
+  
   saveProdWithDefAttrib(product) {
     const allCartItems = fetchItemsFromCache();
 

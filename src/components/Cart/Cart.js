@@ -8,12 +8,12 @@ import fetchCurrencyFromCache from "../../utils/fetchCurrencyFromCache";
 import fetchItemsFromCache from "../../utils/fetchItemsFromCache";
 import "./Cart.scss";
 
-import CartItem from "./CartItem/CartItem";
+import CartItem from "../CartItem/CartItem";
 
 class CartDropdown extends React.Component {
   render() {
     return (
-      <div className="cart-container">
+      <main className="cart maxWidthLimiter">
         <ItemsConsumer>
           {(value) => {
             // to set items on the global context
@@ -28,7 +28,7 @@ class CartDropdown extends React.Component {
 
             return allCartItems.length ? (
               <>
-                <h2 className="cart-header">Cart</h2>
+                <h2 className="cart__header">Cart</h2>
                 <CurrencyConsumer>
                   {(value) => {
                     const { currentCurrency } = value;
@@ -45,35 +45,51 @@ class CartDropdown extends React.Component {
 
                     return (
                       <>
-                        {allCartItems.map((cartItem, i) => (
-                          <CartItem
-                            key={i}
-                            cartItem={cartItem}
-                            cartItemID={`${i}-${cartItem.name.replaceAll(
-                              " ",
-                              "-"
-                            )}`}
-                            setItems={setItems}
-                            selectedItems={allCartItems}
-                            selectedCurrency={selectedCurrency}
-                          />
-                        ))}
-                        <h3>
-                          Tax 21%: {selectedCurrency.symbol}
-                          {taxAmount}
-                        </h3>
-                        <p>Quantity: {totalNumberOfItems}</p>
-                        <p>
-                          Total: {selectedCurrency.symbol}
-                          {totalAmount}
-                        </p>
+                        <div className="cart__cartItemsContainer">
+                          {allCartItems.map((cartItem, i) => (
+                            <CartItem
+                              key={i}
+                              cartItem={cartItem}
+                              cartItemID={`${i}-${cartItem.name.replaceAll(
+                                " ",
+                                "-"
+                              )}`}
+                              setItems={setItems}
+                              selectedItems={allCartItems}
+                              selectedCurrency={selectedCurrency}
+                              componentName="cart"
+                            />
+                          ))}
+                        </div>
+                        <div className="cart__summingDetails">
+                          <h3 className="cart__tax">
+                            Tax 21%:
+                            <span className="cart__taxAmount">
+                              {selectedCurrency.symbol}
+                              {taxAmount}
+                            </span>
+                          </h3>
+                          <h3 className="cart__totalQuantity">
+                            Quantity:
+                            <span className="cart__totalQuantityNumber">
+                              {totalNumberOfItems}
+                            </span>
+                          </h3>
+                          <h2 className="cart__total">
+                            Total:
+                            <span className="cart__totalAmount">
+                              {selectedCurrency.symbol}
+                              {totalAmount}
+                            </span>
+                          </h2>
+                        </div>
                       </>
                     );
                   }}
                 </CurrencyConsumer>
                 <button
                   type="submit"
-                  className="btn order-btn"
+                  className="btn--green cart__submitBtn"
                   onClick={() => alert("Purchased successfully")}
                 >
                   Order
@@ -84,7 +100,7 @@ class CartDropdown extends React.Component {
             );
           }}
         </ItemsConsumer>
-      </div>
+      </main>
     );
   }
 }

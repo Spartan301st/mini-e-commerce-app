@@ -1,8 +1,114 @@
-.cart-container {
+.cart {
     width: 100%;
-    padding: 1rem 2rem;
-    .cart-header {
+    &__header {
         text-transform: uppercase;
-        margin: 2rem 1rem;
+        margin-top: 80px;
+        font-weight: var(--font-x-bold);
+        font-size: var(--title-medium);
+    }
+    &__summingDetails {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 20%;
+        min-width: 200px;
+        margin-bottom: 1rem;
+    }
+    &__tax, &__totalQuantity, &__total {
+        font-size: var(--text-large);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    &__tax, &__totalQuantity {
+        font-weight: var(--font-standard);
+     }
+     &__total {
+        font-weight: var(--font-semi-bold);
+     }
+
+    &__taxAmount, &__totalQuantityNumber, &__totalAmount {
+        font-weight: var(--font-x-bold);
+    }
+
+    &__submitBtn {
+        width: 25%;
+        min-width: 250px;
+        height: 43px;
+        font-weight: var(--font-bold);        
+        font-size: var(--text-small-medium);
+        text-transform: uppercase;
+    }
+
+    &__cartItemsContainer {
+        margin: 56px 0 32px;
+        & > div:last-of-type {
+            border-bottom: 1px solid var(--medium-gray);
+        }
+    }
+
+    .cartItem {
+        border-top: 1px solid var(--medium-gray);
+        padding: 1.5rem 0;
+
+        /* LEFT SIDE */
+        &__leftDetails {
+            gap: 1.25rem;
+        }
+        &__brandNameContainer {
+            gap: 1rem;
+        }
+        &__brand, &__name {
+            font-size: var(--title-small);
+        }
+        &__brand {
+            font-weight: var(--font-bold);
+        }
+        &__name {
+            font-weight: var(--font-standard);
+        }
+        &__price {
+            font-weight: var(--font-x-bold);
+            font-size: var(--text-large);
+        }
+        &__attributesContainer {
+            gap: 1rem;
+        }
+        &__attributeName{
+            font-family: 'Roboto Condensed', sans-serif;
+            font-weight: var(--font-x-bold);
+            font-size: var(--text-large-medium);
+            text-transform: uppercase;
+        }
+        &__textAttributeLabel {
+            height: 45px;
+            width: 63px;
+        }
+
+        &__swatchAttributeLabel {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* RIGHT SIDE */
+        &__rightDetails {
+            gap: 1.5rem;
+        }
+
+        &__addButton, &__subtractButton {
+            width: 45px;
+            height: 45px;
+            
+        }
+        &__subtractButtonTxt, &__addButtonTxt {
+            font-size: 26px;
+        }
+        &__quantity {
+            font-size: var(--text-large);        
+        }
+        &__imageContainer {
+            max-width: 200px;
+            max-height: 288px;
+        }
     }
 }

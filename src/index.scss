@@ -28,6 +28,7 @@
   --dark-green: #479f5e;
   --dark: #1D1F22;
   --light-gray: #EEEEEE;
+  --medium-gray: #E5E5E5;
   --gray: #8D8F9A;
 
 }
@@ -44,6 +45,11 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
+
+button {
+  font-family: "Raleway", sans-serif;
+}
+
 a {
   text-decoration: none;
 }
