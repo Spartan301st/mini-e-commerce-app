@@ -17,6 +17,7 @@ import { CurrencyProvider } from "./context/currencyContext";
 import { Query } from "@apollo/client/react/components";
 import GET_CATEGORIES from "./queries/getCategories";
 import { ItemsProvider } from "./context/itemsContext";
+import Categories from "./interfaces/categories";
 
 class App extends React.Component {
   render() {
@@ -26,8 +27,8 @@ class App extends React.Component {
           <CurrencyProvider>
             <Router>
               <Navbar />
-              <Query query={GET_CATEGORIES}>
-                {({ loading, data }) => {
+              <Query<Categories> query={GET_CATEGORIES}>
+                {({ data, loading }) => {
                   if (data) {
                     // fetching all the categories
                     const { categories: availableCategories } = data;
@@ -61,6 +62,7 @@ class App extends React.Component {
                       </Routes>
                     );
                   }
+                  return <></>;
                 }}
               </Query>
             </Router>

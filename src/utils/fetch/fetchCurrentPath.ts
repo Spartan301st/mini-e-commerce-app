@@ -1,4 +1,4 @@
-const fetchPathname = (pathnameNumber) => {
+const fetchPathname = (pathnameNumber: number) => {
   return window.location.pathname.split("/")[pathnameNumber];
 };
 

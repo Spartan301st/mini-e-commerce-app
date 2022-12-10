@@ -8,8 +8,15 @@ import calcTotItems from "../../../../utils/calculation/calcTotItems";
 import { CurrencyConsumer } from "../../../../context/currencyContext";
 import fetchCurrencyFromCache from "../../../../utils/fetch/fetchCurrencyFromCache";
 import calcTotAmount from "../../../../utils/calculation/calcTotAmount";
-class CartDropdown extends React.Component {
-  constructor(props) {
+import Currency from "../../../../interfaces/currency";
+
+type Toggle = {
+  toggleDropdownVisibility: (params: string) => void;
+}
+
+class CartDropdown extends React.Component<Toggle> {
+  toggleDropdownVisibility;
+  constructor(props: Toggle) {
     super(props);
     const { toggleDropdownVisibility } = props;
     this.toggleDropdownVisibility = toggleDropdownVisibility;
@@ -43,7 +50,7 @@ class CartDropdown extends React.Component {
                       const { currentCurrency } = value;
                       const selectedCurrency = Object.keys(currentCurrency)
                         .length
-                        ? currentCurrency
+                        ? (currentCurrency as Currency)
                         : fetchCurrencyFromCache();
 
                       const totalAmount = calcTotAmount(
@@ -53,7 +60,7 @@ class CartDropdown extends React.Component {
                       return (
                         <>
                           <div className="cartDropdown__cartItemsContainer">
-                            {allCartItems.map((cartItem, i) => (
+                            {allCartItems.map((cartItem, i: number) => (
                               <CartItem
                                 key={i}
                                 cartItem={cartItem}

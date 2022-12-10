@@ -1,9 +1,10 @@
 import React from "react";
 import { CurrencyConsumer } from "../../../context/currencyContext";
+import Currencies from "../../../interfaces/currencies";
 import setCurrencyToCache from "../../../utils/set/setCurrencyToCache";
 import "./CurrencyDropdown.scss";
 
-class CurrencyDropdown extends React.Component {
+class CurrencyDropdown extends React.Component<Currencies> {
   render() {
     const { currencies } = this.props;
     return (

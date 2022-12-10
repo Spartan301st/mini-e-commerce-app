@@ -2,7 +2,6 @@ import React from "react";
 import "./CartLinks.scss";
 import { BsCart2 } from "react-icons/bs";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-
 import CurrencyDropdown from "../CurrencyDropdown/CurrencyDropdown";
 import CartDropdown from "./CartDropdown/CartDropdown";
 import { CurrencyConsumer } from "../../../context/currencyContext";
@@ -11,16 +10,20 @@ import fetchItemsFromCache from "../../../utils/fetch/fetchItemsFromCache";
 import calcTotItems from "../../../utils/calculation/calcTotItems";
 import fetchCurrencyFromCache from "../../../utils/fetch/fetchCurrencyFromCache";
 import setCurrencyToCache from "../../../utils/set/setCurrencyToCache";
+import Currencies from "../../../interfaces/currencies";
+import Currency from "../../../interfaces/currency";
 
-class CartLinks extends React.Component {
-  constructor(props) {
+class CartLinks extends React.Component<Currencies> {
+  currencies;
+  state;
+  constructor(props: Currencies) {
     super(props);
 
     // get all available currencies
-    const { currencies } = props;
+    const { currencies } = this.props;
     this.currencies = currencies;
-
-    if (!fetchCurrencyFromCache().length) {
+      
+    if (!Object.keys(fetchCurrencyFromCache()).length) {
       setCurrencyToCache(currencies[0]);
     }
 
@@ -33,7 +36,7 @@ class CartLinks extends React.Component {
     this.toggleDropdownVisibility = this.toggleDropdownVisibility.bind(this);
   }
 
-  toggleDropdownVisibility(menuName) {
+  toggleDropdownVisibility(menuName: string) {
     if (menuName === "currency") {
       this.setState({
         currencyDropdownVisible: !this.state.currencyDropdownVisible,
@@ -60,8 +63,9 @@ class CartLinks extends React.Component {
                 return (
                   <span className="cartlinks__selectedCurrency">
                     {/* update selected currency*/}
-                    {Object.keys(currentCurrency).length
-                      ? currentCurrency.symbol
+                    {(Object.keys(currentCurrency).length)
+                    // definitely should be of type Currency and not empty obj
+                      ? (currentCurrency as Currency).symbol
                       : fetchCurrencyFromCache().symbol}
                   </span>
                 );

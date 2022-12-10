@@ -1,4 +1,10 @@
-const calcTotAmount = (allCartItems, selectedCurrency) => {
+import Currency from "../../interfaces/currency";
+import SelectedItem from "../../interfaces/selectedItem";
+
+const calcTotAmount = (
+  allCartItems: SelectedItem[],
+  selectedCurrency: Currency
+) => {
   let totalAmount = 0;
   if (allCartItems.length) {
     for (let item of allCartItems) {
