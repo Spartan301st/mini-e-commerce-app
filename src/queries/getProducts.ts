@@ -8,7 +8,7 @@ const GET_PRODUCTS = gql`
         name
         gallery
         attributes {
-          # id
+          # id # COMMENT OUT LATER
           name
           type
           items {

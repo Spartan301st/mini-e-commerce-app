@@ -13,17 +13,20 @@ interface AttributeSet {
   id: string;
   name: string;
   type: string; // text or swatch
-  items: [Attribute];
+  // items: [Attribute];
+  items: Attribute[];
 }
 
 interface SelectedItem {
-  allAttributes: [AttributeSet];
+  // allAttributes: [AttributeSet];
+  allAttributes: AttributeSet[];
   brand: string;
   gallery: [string];
   name: string;
   prices: [Price];
   quantity: number;
-  selectedAttributes: {}; // can be further described
+  // selectedAttributes: {}; // can be further described
+  selectedAttributes: { [key: string]: string };
 }
 
 export default SelectedItem;

@@ -8,9 +8,19 @@ import setItemsToCache from "../../../utils/set/setItemsToCache";
 import { ItemsConsumer } from "../../../context/itemsContext";
 import fetchCurrencyFromCache from "../../../utils/fetch/fetchCurrencyFromCache";
 import findPrice from "../../../utils/misc/findPrice";
+import ProductInteface from "../../../interfaces/product";
+import SelectedItem from "../../../interfaces/selectedItem";
+import Currency from "../../../interfaces/currency";
 
-class Product extends React.Component {
-  constructor(props) {
+type ProductType = {
+  product: ProductInteface
+}
+
+class Product extends React.Component<ProductType> {
+  product;
+  productAvailable;
+  lastSelectedCurrency;
+  constructor(props: {product: ProductInteface}) {
     super(props);
 
     const { product } = this.props;
@@ -23,10 +33,10 @@ class Product extends React.Component {
     this.saveProdWithDefAttrib = this.saveProdWithDefAttrib.bind(this);
   }
 
-  saveProdWithDefAttrib(product) {
+  saveProdWithDefAttrib(product: ProductInteface) {
     const allCartItems = fetchItemsFromCache();
 
-    const cartProductData = {
+    const cartProductData: SelectedItem = {
       brand: product.brand,
       name: product.name,
       prices: product.prices,
@@ -35,6 +45,7 @@ class Product extends React.Component {
       selectedAttributes: {},
       quantity: 0,
     };
+    
 
     // add selected attributes
     for (let [order, attribute] of product.attributes.entries()) {
@@ -42,8 +53,8 @@ class Product extends React.Component {
       // Note: there is an error while fetching products attributes (Nike's and Jacket's attributes are the same when fetched with GET_PRODUCTS when id is required. Probably cased by Attribute id match of both).
       cartProductData.allAttributes[order] = {
         // as name == id
-        id: attribute.name,
         ...attribute,
+        id: attribute.name,
       };
       cartProductData.selectedAttributes[attribute.name] =
         attribute.items[0].value;
@@ -112,14 +123,14 @@ class Product extends React.Component {
                 const price = findPrice(
                   this.product,
                   Object.keys(currentCurrency).length
-                    ? currentCurrency
+                    ? currentCurrency as Currency
                     : this.lastSelectedCurrency
                 );
 
                 return (
                   <span className="product__price">
-                    {price.currency.symbol}
-                    {price.amount}
+                    {price?.currency.symbol}
+                    {price?.amount}
                   </span>
                 );
               }}

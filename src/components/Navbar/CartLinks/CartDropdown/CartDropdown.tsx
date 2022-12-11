@@ -18,7 +18,7 @@ class CartDropdown extends React.Component<Toggle> {
   toggleDropdownVisibility;
   constructor(props: Toggle) {
     super(props);
-    const { toggleDropdownVisibility } = props;
+    const { toggleDropdownVisibility } = this.props;
     this.toggleDropdownVisibility = toggleDropdownVisibility;
   }
   render() {

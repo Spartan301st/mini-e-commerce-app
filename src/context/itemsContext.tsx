@@ -4,7 +4,7 @@ import SelectedItem from "../interfaces/selectedItem";
 
 type CurrentItemsType = {
   selectedItems: SelectedItem[] | [];
-  setItems: (item: SelectedItem) => void;
+  setItems: (item: SelectedItem[]) => void;
 }
 
 // const ItemsContext = React.createContext({});
@@ -80,7 +80,7 @@ export class ItemsProvider extends React.Component<ProviderChildType> {
     // ]
   };
 
-  setItems = (item: SelectedItem) => {
+  setItems = (item: SelectedItem[]) => {
     this.setState({
       ...this.state,
       selectedItems: item,

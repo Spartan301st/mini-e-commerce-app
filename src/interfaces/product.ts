@@ -18,17 +18,17 @@ interface AttributeSet {
   items: Attribute[];
 }
 
-interface Product {
+interface ProductInteface {
   id: string;
   name: string;
   inStock: boolean;
-  gallery: string[];
+  gallery: [string];
   description: string;
   category: string;
   attributes: AttributeSet[];
-  prices: Price[];
-  brand: String;
+  prices: [Price];
+  brand: string;
 }
 
-export default Product;
-export type { Currency, Price, Attribute, AttributeSet };
+export default ProductInteface;
+export type { Price, Attribute, AttributeSet };
