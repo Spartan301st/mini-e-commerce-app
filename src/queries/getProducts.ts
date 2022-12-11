@@ -8,7 +8,7 @@ const GET_PRODUCTS = gql`
         name
         gallery
         attributes {
-          # id # COMMENT OUT LATER
+          # id # CAUSES AN ERROR WHEN QUICK ADD BTN IS CLICKED
           name
           type
           items {

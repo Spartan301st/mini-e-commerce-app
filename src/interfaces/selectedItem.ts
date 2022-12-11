@@ -25,7 +25,6 @@ interface SelectedItem {
   name: string;
   prices: [Price];
   quantity: number;
-  // selectedAttributes: {}; // can be further described
   selectedAttributes: { [key: string]: string };
 }
 
