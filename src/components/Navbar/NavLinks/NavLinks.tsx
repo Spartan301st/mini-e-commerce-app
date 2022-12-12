@@ -11,7 +11,6 @@ class NavLinks extends React.Component {
       <nav className="navlinks">
         {/* fetched categories */}
         <Query<Categories> query={GET_CATEGORIES}>
-        {/* <Query<{categories: [Category]}> query={GET_CATEGORIES}> */}
           {({ data, loading }) => {
             if (data) {
               const { categories } = data;

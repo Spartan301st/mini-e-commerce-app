@@ -13,12 +13,10 @@ interface AttributeSet {
   id: string;
   name: string;
   type: string; // text or swatch
-  // items: [Attribute];
   items: Attribute[];
 }
 
 interface SelectedItem {
-  // allAttributes: [AttributeSet];
   allAttributes: AttributeSet[];
   brand: string;
   gallery: [string];
