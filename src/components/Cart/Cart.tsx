@@ -9,6 +9,7 @@ import fetchItemsFromCache from "../../utils/fetch/fetchItemsFromCache";
 import "./Cart.scss";
 
 import CartItem from "../CartItem/CartItem";
+import Currency from "../../interfaces/currency";
 
 class CartDropdown extends React.Component {
   render() {
@@ -35,7 +36,7 @@ class CartDropdown extends React.Component {
 
                     // determine the selected currency. We check for currecy saved in Consumer first to instantly reflect the changes on changes without a need of refreshing window and only use cache data as a fallback in case if the window was refreshed
                     const selectedCurrency = Object.keys(currentCurrency).length
-                      ? currentCurrency
+                      ? currentCurrency as Currency
                       : fetchCurrencyFromCache();
                     const totalAmount = calcTotAmount(
                       allCartItems,
