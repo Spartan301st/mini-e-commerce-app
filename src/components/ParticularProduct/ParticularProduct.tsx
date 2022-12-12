@@ -6,8 +6,13 @@ import ThumbnailPics from "./ThumbnailPics/ThumbnailPics";
 import ProductDetails from "./ProductDetails/ProductDetails";
 import fetchCurrentPath from "../../utils/fetch/fetchCurrentPath";
 
-class ParticularProduct extends React.Component {
-  constructor(props) {
+import ProductInterface from "../../interfaces/product";
+
+
+class ParticularProduct extends React.Component{
+  pathName;
+  state;
+  constructor(props: {}) {
     super(props);
 
     this.pathName = fetchCurrentPath(2);
@@ -17,18 +22,18 @@ class ParticularProduct extends React.Component {
     this.changeMainImage = this.changeMainImage.bind(this);
   }
 
-  changeMainImage(imgUrl) {
+  changeMainImage(imgUrl: string) {
     return this.setState({ mainImageURL: imgUrl });
   }
 
   render() {
     return (
       <main className="singleProduct maxWidthLimiter">
-        <Query
+        <Query<{product: ProductInterface}>
           query={GET_SINGLE_PRODUCT}
           variables={{ productID: this.pathName }}
         >
-          {({ loading, data }) => {
+          {({ data, loading  }) => {
             if (data) {
               const { product } = data;
               if (product) {
@@ -60,6 +65,7 @@ class ParticularProduct extends React.Component {
                 );
               }
             }
+            return <></>
           }}
         </Query>
       </main>

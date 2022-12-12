@@ -20,7 +20,7 @@ class Product extends React.Component<ProductType> {
   product;
   productAvailable;
   lastSelectedCurrency;
-  constructor(props: {product: ProductInteface}) {
+  constructor(props: ProductType) {
     super(props);
 
     const { product } = this.props;

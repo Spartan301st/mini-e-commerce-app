@@ -9,17 +9,24 @@ import ProductAttribute from "./ProductAttribute/ProductAttribute";
 
 import { Markup } from "interweave";
 import setItemsToCache from "../../../utils/set/setItemsToCache";
+import SelectedItem from "../../../interfaces/selectedItem";
+import ProductInteface from "../../../interfaces/product";
+import Currency from "../../../interfaces/currency";
 
-class ProductDetails extends React.Component {
-  constructor(props) {
+type ProductType = {
+  product: ProductInteface
+}
+
+class ProductDetails extends React.Component<ProductType> {
+  product;
+  constructor(props: ProductType) {
     super(props);
     const { product } = this.props;
-    console.log(product);
     this.product = product;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(event, product) {
+  handleSubmit(event: React.FormEvent<HTMLFormElement>, product: ProductInteface) {
     event.preventDefault();
     if (!product.inStock) return;
 
@@ -29,7 +36,7 @@ class ProductDetails extends React.Component {
     const formData = new FormData(event.currentTarget);
 
     // new data to be saved
-    const cartProductData = {
+    const cartProductData: SelectedItem = {
       brand: product.brand,
       name: product.name,
       prices: product.prices,
@@ -41,7 +48,7 @@ class ProductDetails extends React.Component {
 
     // add newly selected attributes to the final data to be saved
     for (let [key, value] of formData.entries()) {
-      cartProductData.selectedAttributes[key] = value;
+      cartProductData.selectedAttributes[key] = String(value);
     }
 
     // if no cart items at all (no item was added to cart yet)
@@ -99,8 +106,9 @@ class ProductDetails extends React.Component {
                   setItems(fetchItemsFromCache());
                 }}
               >
-                {this.product.attributes.map((attribute) => (
+                {this.product.attributes.map((attribute, i) => (
                   <ProductAttribute
+                    key={i}
                     componentName="productDetails"
                     attribute={attribute}
                   />
@@ -112,13 +120,13 @@ class ProductDetails extends React.Component {
                       const { currentCurrency } = value;
                       const selectedCurrency = Object.keys(currentCurrency)
                         .length
-                        ? currentCurrency
+                        ? currentCurrency as Currency
                         : fetchCurrencyFromCache();
                       const price = findPrice(this.product, selectedCurrency);
                       return (
                         <span className="productDetails__price">
-                          {price.currency.symbol}
-                          {price.amount}
+                          {price?.currency.symbol}
+                          {price?.amount}
                         </span>
                       );
                     }}

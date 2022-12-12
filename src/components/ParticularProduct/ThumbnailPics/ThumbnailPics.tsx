@@ -1,7 +1,13 @@
 import React from "react";
 import "./ThumbnailPics.scss";
 
-class ThumbnailPics extends React.Component {
+type ThumbnailType = {
+  name: string;
+  imageURL: string;
+  changeMainImage(imgUrl: string): void
+}
+
+class ThumbnailPics extends React.Component<ThumbnailType> {
   render() {
     const { imageURL, name, changeMainImage } = this.props;
     return (

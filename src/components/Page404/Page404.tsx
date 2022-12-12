@@ -14,7 +14,7 @@ class Page404 extends React.Component {
           />
           <img
             src="https://assets.codepen.io/5647096/Delorean.png"
-            alt="El Delorean, El Doc y Marti McFly"
+            alt="Delorean, Doc and Marty McFly"
           />
         </div>
         <div className="text">

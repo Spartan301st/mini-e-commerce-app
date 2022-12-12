@@ -1,7 +1,16 @@
 import React from "react";
+import { AttributeSet } from "../../../../interfaces/product";
 import "./ProductAttribute.scss";
-class ProductAttribute extends React.Component {
-  constructor(props) {
+
+type ProductAttributeType = {
+  componentName: string;
+  attribute: AttributeSet;
+}
+
+class ProductAttribute extends React.Component<ProductAttributeType> {
+  componentName;
+  attribute;
+  constructor(props: ProductAttributeType) {
     super(props);
     const { componentName, attribute } = props;
     this.componentName = componentName;
