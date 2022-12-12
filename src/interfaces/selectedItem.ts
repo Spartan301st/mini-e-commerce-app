@@ -29,3 +29,4 @@ interface SelectedItem {
 }
 
 export default SelectedItem;
+export type { AttributeSet };

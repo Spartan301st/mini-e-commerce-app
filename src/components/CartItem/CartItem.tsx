@@ -6,9 +6,24 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import incrementDecrementQuantity from "../../utils/set/incrementDecrementQuantity";
 import CartItemAttribute from "./CartItemAttribute/CartItemAttribute";
+import SelectedItem from "../../interfaces/selectedItem";
+import Currency from "../../interfaces/currency";
 
-class CartItem extends React.Component {
-  constructor(props) {
+type CartItemPropType = {
+  cartItem: SelectedItem;
+  cartItemID: string;
+  setItems: (item: SelectedItem[]) => void;
+  selectedItems: SelectedItem[];
+  selectedCurrency: Currency;
+  componentName: string
+}
+
+class CartItem extends React.Component<CartItemPropType> {
+  cartItemID;
+  setItems;
+  componentName;
+  state;
+  constructor(props: CartItemPropType) {
     super(props);
     const { cartItemID, setItems, componentName } = this.props;
     this.cartItemID = cartItemID;
@@ -23,6 +38,8 @@ class CartItem extends React.Component {
     const { cartItem, selectedItems, selectedCurrency } = this.props;
     const price = findPrice(cartItem, selectedCurrency);
     const { allAttributes, selectedAttributes } = cartItem;
+    
+    
 
     if (cartItem)
       return (
@@ -35,7 +52,7 @@ class CartItem extends React.Component {
             </div>
             <span className="cartItem__price">
               {selectedCurrency.symbol}
-              {price.amount}
+              {price?.amount}
             </span>
             {/* rendering corresponding attribute names of the given cart item */}
             <div className="cartItem__attributesContainer">
@@ -93,7 +110,7 @@ class CartItem extends React.Component {
                 src={cartItem.gallery[this.state.selectedImageIndex]}
                 alt={cartItem.name}
               />
-              {cartItem.gallery.length > 1 && this.componentName === "Cart" && (
+              {cartItem.gallery.length > 1 && this.componentName === "cart" && (
                 <div className="cartItem__ImgSwitchersContainer">
                   <button
                     className="cartItem__ImgSwitcherBtn"

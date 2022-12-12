@@ -1,10 +1,11 @@
+import SelectedItem from "../../interfaces/selectedItem";
 import setItemsToCache from "./setItemsToCache";
 
 const incrementDecrementQuantity = (
-  procedureName,
-  selectedItems,
-  cartItem,
-  setItems
+  procedureName: string,
+  selectedItems: SelectedItem[],
+  cartItem: SelectedItem,
+  setItems: (item: SelectedItem[]) => void
 ) => {
   // reassign selectedItems
   let allCartItems = selectedItems;

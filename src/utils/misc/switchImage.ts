@@ -1,4 +1,8 @@
-const switchImage = (selectedImgIndex, galleryLength, direction) => {
+const switchImage = (
+  selectedImgIndex: number,
+  galleryLength: number,
+  direction: string
+) => {
   const indexSwitchValue = direction === "right" ? 1 : -1;
   return (selectedImgIndex + indexSwitchValue + galleryLength) % galleryLength;
 };

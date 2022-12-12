@@ -1,7 +1,21 @@
 import React from "react";
+import { AttributeSet } from "../../../interfaces/selectedItem";
 import "./CartItemAttribute.scss";
-class CartItemAttribute extends React.Component {
-  constructor(props) {
+
+type CartItemAttributePropType = {
+  componentName: string;
+  parentComponentName: string;
+  attribute: AttributeSet;
+  itemValue: string;
+  cartItemID: string;
+}
+class CartItemAttribute extends React.Component<CartItemAttributePropType> {
+  componentName;
+  attribute;
+  itemValue;
+  cartItemID;
+  parentComponentName;
+  constructor(props: CartItemAttributePropType) {
     super(props);
     const {
       componentName,
