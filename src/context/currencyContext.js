@@ -9,8 +9,6 @@ export class CurrencyProvider extends React.Component {
     currentCurrency: {},
   };
   setCurrentCurrency = (currency) => {
-    // this.setState(() => ({ currentCurrency: currency }));
-    // this.setState({ currentCurrency: currency });
     this.setState({ ...this.state, currentCurrency: currency });
   };
 

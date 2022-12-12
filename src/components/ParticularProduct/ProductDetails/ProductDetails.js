@@ -14,7 +14,6 @@ class ProductDetails extends React.Component {
   constructor(props) {
     super(props);
     const { product } = this.props;
-    console.log(product);
     this.product = product;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -99,8 +98,9 @@ class ProductDetails extends React.Component {
                   setItems(fetchItemsFromCache());
                 }}
               >
-                {this.product.attributes.map((attribute) => (
+                {this.product.attributes.map((attribute, i) => (
                   <ProductAttribute
+                    key={i}
                     componentName="productDetails"
                     attribute={attribute}
                   />
